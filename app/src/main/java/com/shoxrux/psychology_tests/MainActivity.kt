@@ -8,6 +8,7 @@ import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.bottom_fragments.InfoFragment
 import com.shoxrux.psychology_tests.bottom_fragments.SettingsFragment
 import com.shoxrux.psychology_tests.databinding.ActivityMainBinding
+import com.shoxrux.psychology_tests.interfaces.IOnBackPressed
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -76,4 +77,7 @@ class MainActivity : AppCompatActivity() {
         binding.menuBottom.visibility = View.GONE
 
     }
+
+
+
 }

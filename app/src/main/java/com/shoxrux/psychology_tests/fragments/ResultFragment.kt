@@ -1,11 +1,17 @@
 package com.shoxrux.psychology_tests.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.shoxrux.psychology_tests.R
+import com.shoxrux.psychology_tests.databinding.FragmentResultBinding
+import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
+import com.shoxrux.psychology_tests.interfaces.IOnBackPressed
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,12 +36,26 @@ class ResultFragment : Fragment() {
         }
     }
 
+    lateinit var binding: FragmentResultBinding
+    private val TAG = "ResultFragment"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        binding = FragmentResultBinding.inflate(layoutInflater,container,false)
+
+
+//        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                val questionsFragment = QuestionsFragment()
+//                parentFragmentManager.beginTransaction()
+//                    .addToBackStack(null)
+//                    .replace(R.id.frameLayout,questionsFragment).commit()
+//            }
+//        })
+        
+        return binding.root
     }
 
     companion object {
@@ -57,4 +77,6 @@ class ResultFragment : Fragment() {
                 }
             }
     }
+
+   
 }
