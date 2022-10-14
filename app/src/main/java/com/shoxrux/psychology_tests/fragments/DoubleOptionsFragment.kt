@@ -41,10 +41,10 @@ class DoubleOptionsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDoubleOptionsBinding.inflate(layoutInflater,container,false)
 
-        val value = requireArguments().get("test") as Test_Values
-        val positioni = requireArguments().get("position")
-
-        binding.tekst.text = "${value.sarlavha} ${value.options}"
+//        val value = requireArguments().get("test") as Test_Values
+//        val positioni = requireArguments().get("position")
+//
+//        binding.tekst.text = "${value.sarlavha} ${value.options}"
 
         return binding.root
     }

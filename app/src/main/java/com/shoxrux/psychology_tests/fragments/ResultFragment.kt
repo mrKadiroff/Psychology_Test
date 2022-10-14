@@ -44,13 +44,22 @@ class ResultFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentResultBinding.inflate(layoutInflater,container,false)
-
+        val options = requireArguments().get("options")
+        val sarlavha = requireArguments().get("sarlavha")
+        var kategoriya = requireArguments().get("katposition")
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val testFragment = TestFragment()
+                var bundle = Bundle()
+                bundle.putString("test",sarlavha.toString())
+                bundle.putInt("position",options.toString().toInt())
+                bundle.putInt("katposition",kategoriya.toString().toInt())
+
+
+                val introductionFragment = IntroductionFragment()
+                introductionFragment.arguments = bundle
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout,testFragment).commit()
+                    .replace(R.id.frameLayout,introductionFragment).commit()
             }
         })
         

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.adapters.CategoryRv
 import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
@@ -46,6 +47,16 @@ class HomeFragment : Fragment() {
         setRv()
 
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                requireActivity().finish()
+
+
+            }
+        })
+
+
         return binding.root
     }
 
@@ -55,7 +66,7 @@ class HomeFragment : Fragment() {
             override fun onItemClick(malumotlar: Category_Names, position: Int) {
 
                 var bundle = Bundle()
-                bundle.putSerializable("kategoriya",malumotlar)
+                bundle.putString("kategoriya",malumotlar.title)
                 bundle.putInt("position",position)
 
                 val testFragment = TestFragment()

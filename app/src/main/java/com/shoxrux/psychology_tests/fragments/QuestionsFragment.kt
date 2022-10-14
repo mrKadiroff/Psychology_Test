@@ -15,8 +15,10 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import com.shoxrux.psychology_tests.R
+import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
@@ -57,6 +59,7 @@ class QuestionsFragment : Fragment() {
     private var skip = 0
     private var qIndex = 0
     private var updateQueNo = 1
+    private var sarlavha = ""
     // create string for question, answer and options
     private var questions0 = arrayOf(
         "Q.1. If a computer has more than one processor then it is known as?",
@@ -113,10 +116,10 @@ class QuestionsFragment : Fragment() {
         binding = FragmentQuestionsBinding.inflate(layoutInflater,container,false)
 
 
-        val value = requireArguments().get("test") as Test_Values
-        val positioni = requireArguments().get("position")
 
-        binding.title.text = value.sarlavha
+         sarlavha = requireArguments().get("sarlavha").toString()
+
+        binding.title.text = sarlavha
 
 
 
@@ -124,12 +127,14 @@ class QuestionsFragment : Fragment() {
 
 
 
+
+
+
         return binding.root
     }
 
     private fun initView() {
-        val value = requireArguments().get("test") as Test_Values
-        val positioni = requireArguments().get("position")
+
 
 
 
@@ -137,7 +142,7 @@ class QuestionsFragment : Fragment() {
         binding.apply {
 
 
-            when(value.sarlavha){
+            when(sarlavha){
                 "Sevgida omadlimisiz?" ->{
                     savollar = questions0
                     variantlar = options0
@@ -199,10 +204,14 @@ class QuestionsFragment : Fragment() {
 
             } else {
                 score = correct
+
+                var kategoriya = requireArguments().get("katposition")
+
                         var bundle = Bundle()
-        bundle.putInt("correct",correct)
-        bundle.putInt("wrong",wrong)
-        bundle.putInt("skip",skip)
+        bundle.putString("sarlavha",sarlavha)
+        bundle.putInt("options",3)
+                bundle.putInt("katposition",kategoriya.toString().toInt())
+
 
         val resultFragment = ResultFragment()
         resultFragment.arguments = bundle

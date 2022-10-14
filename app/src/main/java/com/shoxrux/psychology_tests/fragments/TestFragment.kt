@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.adapters.TestsRv
+import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
@@ -52,6 +54,19 @@ class TestFragment : Fragment() {
         setRv()
 
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+
+
+
+                val introductionFragment = HomeFragment()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout,introductionFragment).commit()
+            }
+        })
+
+
         return binding.root
     }
 
@@ -64,12 +79,12 @@ class TestFragment : Fragment() {
 
 
 
-        val value = requireArguments().get("kategoriya") as Category_Names
+        val value = requireArguments().get("kategoriya")
         val positioni = requireArguments().get("position")
 
 
 
-        binding.sarlavhasi.text = value.title
+        binding.sarlavhasi.text = value.toString()
 
         val customObjects = getTestsValues()
         customObjects.forEach {
@@ -80,33 +95,42 @@ class TestFragment : Fragment() {
         testsRv = TestsRv(sortedlist,object :TestsRv.OnItemClickListener{
             override fun onItemClick(malumotlar: Test_Values, position: Int) {
                 var bundle = Bundle()
-                bundle.putSerializable("test",malumotlar)
-                bundle.putInt("position",position)
+                bundle.putString("test",malumotlar.sarlavha)
+                bundle.putInt("position",malumotlar.options)
+                bundle.putInt("katposition",positioni.toString().toInt())
 
-                when(malumotlar.options){
-                    2->{
-                        val doubleOptionsFragment = DoubleOptionsFragment()
-                        doubleOptionsFragment.arguments = bundle
+                        val introductionFragment = IntroductionFragment()
+                introductionFragment.arguments = bundle
                         parentFragmentManager.beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.frameLayout,doubleOptionsFragment).commit()
-                    }
-                    3->{
-                        val questionsFragment = QuestionsFragment()
-                        questionsFragment.arguments = bundle
-                        parentFragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.frameLayout,questionsFragment).commit()
-                    }
+                            .replace(R.id.frameLayout,introductionFragment).commit()
 
-                    4->{
-                        val fourOptionsFragment = FourOptionsFragment()
-                        fourOptionsFragment.arguments = bundle
-                        parentFragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.frameLayout,fourOptionsFragment).commit()
-                    }
-                }
+
+
+//                when(malumotlar.options){
+//                    2->{
+//                        val doubleOptionsFragment = DoubleOptionsFragment()
+//                        doubleOptionsFragment.arguments = bundle
+//                        parentFragmentManager.beginTransaction()
+//                            .addToBackStack(null)
+//                            .replace(R.id.frameLayout,doubleOptionsFragment).commit()
+//                    }
+//                    3->{
+//                        val questionsFragment = QuestionsFragment()
+//                        questionsFragment.arguments = bundle
+//                        parentFragmentManager.beginTransaction()
+//                            .addToBackStack(null)
+//                            .replace(R.id.frameLayout,questionsFragment).commit()
+//                    }
+//
+//                    4->{
+//                        val fourOptionsFragment = FourOptionsFragment()
+//                        fourOptionsFragment.arguments = bundle
+//                        parentFragmentManager.beginTransaction()
+//                            .addToBackStack(null)
+//                            .replace(R.id.frameLayout,fourOptionsFragment).commit()
+//                    }
+//                }
 
 
 
