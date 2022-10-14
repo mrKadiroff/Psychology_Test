@@ -18,7 +18,7 @@ class TestsRv(var list: ArrayList<Test_Values>, var onItemClickListener: OnItemC
         fun onBind(test: Test_Values) {
             itemUserBinding.heading.text = test.sarlavha
             itemUserBinding.daqiqa.text = test.duration
-            itemUserBinding.raqami.text = test.quantity
+            itemUserBinding.raqami.text = test.quantityOptions
             itemUserBinding.root.setOnClickListener{
                 onItemClickListener.onItemClick(test,adapterPosition)
             }

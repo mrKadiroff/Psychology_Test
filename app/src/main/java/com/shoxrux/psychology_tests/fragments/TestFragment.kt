@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.adapters.TestsRv
@@ -82,11 +83,33 @@ class TestFragment : Fragment() {
                 bundle.putSerializable("test",malumotlar)
                 bundle.putInt("position",position)
 
-                val questionsFragment = QuestionsFragment()
-                questionsFragment.arguments = bundle
-                parentFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.frameLayout,questionsFragment).commit()
+                when(malumotlar.options){
+                    2->{
+                        val doubleOptionsFragment = DoubleOptionsFragment()
+                        doubleOptionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,doubleOptionsFragment).commit()
+                    }
+                    3->{
+                        val questionsFragment = QuestionsFragment()
+                        questionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,questionsFragment).commit()
+                    }
+
+                    4->{
+                        val fourOptionsFragment = FourOptionsFragment()
+                        fourOptionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,fourOptionsFragment).commit()
+                    }
+                }
+
+
+
             }
 
 
@@ -102,15 +125,15 @@ class TestFragment : Fragment() {
         val customObjects = ArrayList<Test_Values>()
 
         customObjects.apply {
-            add(Test_Values("Rashkchimisiz","16","2",0))
-            add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",0))
-            add(Test_Values("Sevgida omadlimisiz?","26","3",0))
-            add(Test_Values("Jinsiy hayotga tayyormisiz?","22","2",0))
+            add(Test_Values("Rashkchimisiz","16","2",0,2,))
+            add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",0,4))
+            add(Test_Values("Sevgida omadlimisiz?","12","3",0,3))
+            add(Test_Values("Jinsiy hayotga tayyormisiz?","22","2",0,2))
 
-            add(Test_Values("Yigitlar nega sizga qaramaydi??","18","4",1))
-            add(Test_Values("Kosmetikasiz hayot nima?","22","2",1))
-            add(Test_Values("Tabiiy go'zallikka nima yetsin","22","2",1))
-            add(Test_Values("Qaynona bilan kelishish?","22","2",1))
+            add(Test_Values("Yigitlar nega sizga qaramaydi??","15","4",1,3))
+            add(Test_Values("Kosmetikasiz hayot nima?","22","2",1,2))
+            add(Test_Values("Tabiiy go'zallikka nima yetsin","9","2",1,3))
+            add(Test_Values("Qaynona bilan kelishish?","22","2",1,5))
 
 
             return customObjects

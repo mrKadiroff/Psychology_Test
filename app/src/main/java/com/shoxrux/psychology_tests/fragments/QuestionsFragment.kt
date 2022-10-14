@@ -23,6 +23,7 @@ import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.models.Test_Values
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +49,8 @@ class QuestionsFragment : Fragment() {
     }
 
     lateinit var binding: FragmentQuestionsBinding
+    lateinit var savollar:Array<String>
+    lateinit var variantlar:Array<String>
     private var score = 0
     private var correct = 0
     private var wrong = 0
@@ -55,15 +58,15 @@ class QuestionsFragment : Fragment() {
     private var qIndex = 0
     private var updateQueNo = 1
     // create string for question, answer and options
-    private var questions = arrayOf(
+    private var questions0 = arrayOf(
         "Q.1. If a computer has more than one processor then it is known as?",
         "Q.2. Full form of URL is?",
         "Q.3. One kilobyte (KB) is equal to")
-    private var answer = arrayOf(
+    private var answer0 = arrayOf(
         "Multiprocessor",
         "Uniform Resource Locator",
         "1,024 bytes")
-    private var options = arrayOf(
+    private var options0 = arrayOf(
         "Uniprocess",
         "Multiprocessor",
         "Multithreaded",
@@ -72,10 +75,33 @@ class QuestionsFragment : Fragment() {
         "Uniform Resource Linkwrong",
         "Uniform Registered Link",
         "Unified Resource Link",
-        "1,000 bits",
-        "1,024 bytes",
-        "1,024 megabytes",
-        "1,024 gigabytes")
+        "1,000 bits")
+
+
+    private var questions1 = arrayOf(
+        "Q.1. Sevgiga ishonasizmi??",
+        "Q.2. Siz uchun sex nima?",
+        "Q.3. Jinsiy tarbiya muhimmi?",
+        "Q.4. Opishishning foydali tomonlari?")
+    private var answer1 = arrayOf(
+        "Ha",
+        "Yo'q",
+        "Bilmayman")
+    private var options1 = arrayOf(
+        "Ha",
+        "Yo'q",
+        "Dinnaxuy",
+        "Pashol",
+        "Sizni sevaman",
+        "Yolg'on gapirmang",
+        "Sevgi bu sarob",
+        "Seksualni erkak",
+        "Jalab bo'lma",
+        "Seksning siri",
+        "Om yalsh",
+        "Gandon kalla")
+
+
 
 
     private val TAG = "QuestionsFragment"
@@ -85,6 +111,7 @@ class QuestionsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentQuestionsBinding.inflate(layoutInflater,container,false)
+
 
         val value = requireArguments().get("test") as Test_Values
         val positioni = requireArguments().get("position")
@@ -101,19 +128,38 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun initView() {
+        val value = requireArguments().get("test") as Test_Values
+        val positioni = requireArguments().get("position")
+
 
 
 
         binding.apply {
 
 
-            var ozgaruvchi = questions
+            when(value.sarlavha){
+                "Sevgida omadlimisiz?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                }
+                "Yigitlar nega sizga qaramaydi??" ->{
+                    savollar = questions1
+                    variantlar = options1
+                }
+                "Tabiiy go'zallikka nima yetsin" ->{
+                    savollar = questions0
+                    variantlar = options0
+                }
+            }
 
-            tvQuestion.text = questions[qIndex]
-            radioButton1.text = options[0]
-            radioButton2.text = options[1]
-            radioButton3.text = options[2]
-            radioButton4.text = options[3]
+
+
+
+            tvQuestion.text = savollar[qIndex]
+            radioButton1.text = variantlar[0]
+            radioButton2.text = variantlar[1]
+            radioButton3.text = variantlar[2]
+
             // check options selected or not
             // if selected then selected option correct or wrong
             nextQuestionBtn.setOnClickListener {
@@ -129,8 +175,8 @@ class QuestionsFragment : Fragment() {
 
 
             }
-            tvNoOfQues.text = "$updateQueNo/3"
-            tvQuestion.text = questions[qIndex]
+            tvNoOfQues.text = "$updateQueNo/${savollar.size}"
+            tvQuestion.text = savollar[qIndex]
 
 
         }
@@ -140,17 +186,17 @@ class QuestionsFragment : Fragment() {
     private fun showNextQuestion() {
         qIndex++
         binding.apply {
-            if (updateQueNo < 3) {
-                tvNoOfQues.text = "${updateQueNo + 1}/3"
+            if (updateQueNo < savollar.size) {
+                tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
                 updateQueNo++
             }
-            if (qIndex <= questions.size - 1) {
-                tvQuestion.text = questions[qIndex]
+            if (qIndex <= savollar.size - 1) {
+                tvQuestion.text = savollar[qIndex]
                 Log.d(TAG, "showNextQuestion: ${qIndex}")
-                radioButton1.text = options[qIndex * 4] // 2*4=8
-                radioButton2.text = options[qIndex * 4 + 1] //  2*4+1=9
-                radioButton3.text = options[qIndex * 4 + 2] //  2*4+2=10
-                radioButton4.text = options[qIndex * 4 + 3] //  2*4+3=11
+                radioButton1.text = variantlar[qIndex * 3] // 2*4=8
+                radioButton2.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
+                radioButton3.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
+
             } else {
                 score = correct
                         var bundle = Bundle()

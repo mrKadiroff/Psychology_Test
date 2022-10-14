@@ -3,15 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ResultFragment">
+    tools:context=".fragments.DoubleOptionsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tekst"
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="23sp"
+        android:textColor="@color/black"
+        android:text="2 variantli testlar" />
 
 </FrameLayout>
