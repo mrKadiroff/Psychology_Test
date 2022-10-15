@@ -37,7 +37,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [QuestionsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class QuestionsFragment : Fragment() {
+class QuestionsFragment : Fragment(),View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -160,26 +160,36 @@ class QuestionsFragment : Fragment() {
 
 
 
-            tvQuestion.text = savollar[qIndex]
-            radioButton1.text = variantlar[0]
-            radioButton2.text = variantlar[1]
-            radioButton3.text = variantlar[2]
+            birinchiSavol.setOnClickListener {
+                var text = txtPlayScore.text.toString().toInt()
+              val first = text + 1
+              txtPlayScore.text = first.toString()
+              Log.d(TAG, "initView: ${text}")
+              showNextQuestion()
+          }
 
-            // check options selected or not
-            // if selected then selected option correct or wrong
-            nextQuestionBtn.setOnClickListener {
-                if (radiogrp.checkedRadioButtonId == -1) {
-                    Toast.makeText(binding.root.context,
-                        "Please select an options",
-                        Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    showNextQuestion()
-
-                }
-
-
+            ikkinchiSavol.setOnClickListener {
+                var text = txtPlayScore.text.toString().toInt()
+                val second = text + 2
+                txtPlayScore.text = second.toString()
+                Log.d(TAG, "initView: ${text}")
+                showNextQuestion()
             }
+
+            uchinchiSavol.setOnClickListener {
+                var text = txtPlayScore.text.toString().toInt()
+                val third = text + 3
+                txtPlayScore.text = third.toString()
+                Log.d(TAG, "initView: ${text}")
+                showNextQuestion()
+            }
+
+            tvQuestion.text = savollar[qIndex]
+            firstQuestion.text = variantlar[0]
+            secondQuestion.text = variantlar[1]
+            thirdQuestion.text = variantlar[2]
+
+
             tvNoOfQues.text = "$updateQueNo/${savollar.size}"
             tvQuestion.text = savollar[qIndex]
 
@@ -198,18 +208,21 @@ class QuestionsFragment : Fragment() {
             if (qIndex <= savollar.size - 1) {
                 tvQuestion.text = savollar[qIndex]
                 Log.d(TAG, "showNextQuestion: ${qIndex}")
-                radioButton1.text = variantlar[qIndex * 3] // 2*4=8
-                radioButton2.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
-                radioButton3.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
+                firstQuestion.text = variantlar[qIndex * 3] // 2*4=8
+                secondQuestion.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
+                thirdQuestion.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
 
             } else {
                 score = correct
 
                 var kategoriya = requireArguments().get("katposition")
+                var result = txtPlayScore.text.toString().toInt()
 
-                        var bundle = Bundle()
+                var bundle = Bundle()
         bundle.putString("sarlavha",sarlavha)
         bundle.putInt("options",3)
+                bundle.putInt("result",result)
+                bundle.putInt("savollarSoni",savollar.size)
                 bundle.putInt("katposition",kategoriya.toString().toInt())
 
 
@@ -219,7 +232,7 @@ class QuestionsFragment : Fragment() {
             .addToBackStack(null)
             .replace(R.id.frameLayout,resultFragment).commit()
             }
-            radiogrp.clearCheck()
+
         }
 
 
@@ -247,5 +260,9 @@ class QuestionsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onClick(p0: View?) {
+
     }
 }

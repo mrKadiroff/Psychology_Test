@@ -12,6 +12,9 @@ import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.FragmentResultBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.interfaces.IOnBackPressed
+import com.shoxrux.psychology_tests.models.Category_Names
+import com.shoxrux.psychology_tests.models.Results
+import com.shoxrux.psychology_tests.models.Test_Values
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +41,7 @@ class ResultFragment : Fragment() {
 
     lateinit var binding: FragmentResultBinding
     private val TAG = "ResultFragment"
+    lateinit var sortedlist:ArrayList<Results>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +50,18 @@ class ResultFragment : Fragment() {
         binding = FragmentResultBinding.inflate(layoutInflater,container,false)
         val options = requireArguments().get("options")
         val sarlavha = requireArguments().get("sarlavha")
-        var kategoriya = requireArguments().get("katposition")
+        val kategoriya = requireArguments().get("katposition")
+        val result = requireArguments().get("result")
+        val savolSoni = requireArguments().get("savollarSoni")
+        sortedlist = ArrayList()
+
+
+
+
+        checkResult()
+
+
+
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -64,6 +79,53 @@ class ResultFragment : Fragment() {
         })
         
         return binding.root
+    }
+
+    private fun checkResult() {
+        val sarlavha = requireArguments().get("sarlavha")
+        val result = requireArguments().get("result").toString().toInt()
+        val savolSoni = requireArguments().get("savollarSoni").toString().toInt()
+        val options = requireArguments().get("options").toString().toInt()
+        val customObjects = getCustomObjects()
+
+        customObjects.forEach {
+          if (it.title == sarlavha){
+              sortedlist.add(it)
+
+          }
+        }
+
+        var maxBall = savolSoni * options
+        val middle = maxBall * 0.65
+
+        if (result>=middle){
+            binding.savollarSoni.text = "Javobi: ${sortedlist[0].high}"
+        }else{
+            binding.savollarSoni.text = "Javobi: ${sortedlist[0].middle}"
+        }
+
+        binding.natija.text = "Maksimal to'plangan ball: ${maxBall}"
+        binding.javobi.text = "Testda ishlangan natija: ${result}"
+        binding.variantlarSoni.text = "Variantlar soni: ${options}"
+
+        binding.ortakoeffitsiyenti.text = "O'rta koeffitsiyenti: ${middle}"
+    }
+
+
+    private fun getCustomObjects():ArrayList<Results> {
+        val customObjects = ArrayList<Results>()
+
+        customObjects.apply {
+            add(Results("Sevgida omadlimisiz?","Sizni sevgida omadli deb bo'lmaydi, haqiqiy loosersiz va ozgina dalbayoblik jihatlaringiz ham yo'q emas","Siz krasavchiksiz va hamma qizlar sizga kampot"))
+            add(Results("Yigitlar nega sizga qaramaydi??","Yigitlar sizga qaramasligining sababi siz o'zingizga bo'lgan ishonchingiz past","Sizga hamma yigitlar qaraydi va siz juda ham chiroyli qizsiz"))
+            add(Results("Tabiiy go'zallikka nima yetsin","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+            add(Results("Rashkchimisiz","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+            add(Results("Jinsiy hayotga tayyormisiz?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+            add(Results("Kosmetikasiz hayot nima?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+
+
+            return customObjects
+        }
     }
 
     companion object {
