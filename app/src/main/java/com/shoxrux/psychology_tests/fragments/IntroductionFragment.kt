@@ -44,6 +44,9 @@ class IntroductionFragment : Fragment() {
 
 
         navigate()
+
+
+
         onbackPressed()
 
         return binding.root
@@ -54,10 +57,11 @@ class IntroductionFragment : Fragment() {
             override fun handleOnBackPressed() {
 
                 val sarlavha = requireArguments().get("test")
+                val sarlavha2 = requireArguments().get("test2")
                 val options = requireArguments().get("position")
                 val kategoriya = requireArguments().get("katposition")
                 var bundle = Bundle()
-                bundle.putString("kategoriya",sarlavha.toString())
+                bundle.putString("kategoriya",sarlavha2.toString())
                 bundle.putInt("position",kategoriya.toString().toInt())
 
 
@@ -70,11 +74,32 @@ class IntroductionFragment : Fragment() {
     }
 
     private fun navigate() {
+
+
+
+
+
+
         val sarlavha = requireArguments().get("test")
+        val sarlavha2 = requireArguments().get("test2")
         val options = requireArguments().get("position")
         val kategoriya = requireArguments().get("katposition")
 
-        binding.tekstcha.text = "${sarlavha}"
+        binding.heading.text = "${sarlavha}"
+
+
+        binding.orqaga.setOnClickListener{
+
+            var bundle = Bundle()
+            bundle.putString("kategoriya",sarlavha2.toString())
+            bundle.putInt("position",kategoriya.toString().toInt())
+
+
+            val testFragment = TestFragment()
+            testFragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout,testFragment).commit()
+        }
 
 
         binding.start.setOnClickListener {

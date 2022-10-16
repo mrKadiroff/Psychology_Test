@@ -60,9 +60,9 @@ class TestFragment : Fragment() {
 
 
 
-                val introductionFragment = HomeFragment()
+                val homeFragment = HomeFragment()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout,introductionFragment).commit()
+                    .replace(R.id.frameLayout,homeFragment).commit()
             }
         })
 
@@ -73,7 +73,9 @@ class TestFragment : Fragment() {
     private fun setRv() {
 
         binding.nazad.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            val homeFragment = HomeFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout,homeFragment).commit()
         }
 
 
@@ -84,7 +86,7 @@ class TestFragment : Fragment() {
 
 
 
-        binding.sarlavhasi.text = value.toString()
+
 
         val customObjects = getTestsValues()
         customObjects.forEach {
@@ -92,10 +94,14 @@ class TestFragment : Fragment() {
                 sortedlist.add(it)
             }
         }
+
+        binding.sarlavhasi.text = value.toString()
+
         testsRv = TestsRv(sortedlist,object :TestsRv.OnItemClickListener{
             override fun onItemClick(malumotlar: Test_Values, position: Int) {
                 var bundle = Bundle()
                 bundle.putString("test",malumotlar.sarlavha)
+                bundle.putString("test2",value.toString())
                 bundle.putInt("position",malumotlar.options)
                 bundle.putInt("katposition",positioni.toString().toInt())
 

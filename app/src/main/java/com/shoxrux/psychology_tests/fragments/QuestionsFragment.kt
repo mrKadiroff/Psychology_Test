@@ -119,7 +119,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
          sarlavha = requireArguments().get("sarlavha").toString()
 
-        binding.title.text = sarlavha
+
 
 
 
@@ -131,6 +131,11 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
         return binding.root
+    }
+
+    private fun setProgressBar() {
+        binding.progressBar.progress = 1
+        binding.progressBar.max = savollar.size
     }
 
     private fun initView() {
@@ -161,6 +166,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
             birinchiSavol.setOnClickListener {
+                setProgressBar()
                 var text = txtPlayScore.text.toString().toInt()
               val first = text + 1
               txtPlayScore.text = first.toString()
@@ -169,6 +175,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
           }
 
             ikkinchiSavol.setOnClickListener {
+                setProgressBar()
                 var text = txtPlayScore.text.toString().toInt()
                 val second = text + 2
                 txtPlayScore.text = second.toString()
@@ -177,6 +184,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
             }
 
             uchinchiSavol.setOnClickListener {
+                setProgressBar()
                 var text = txtPlayScore.text.toString().toInt()
                 val third = text + 3
                 txtPlayScore.text = third.toString()
@@ -199,7 +207,11 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
     private fun showNextQuestion() {
+
         qIndex++
+
+        binding.progressBar.progress = qIndex
+        binding.progressBar.max = savollar.size
         binding.apply {
             if (updateQueNo < savollar.size) {
                 tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
@@ -217,6 +229,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
                 var kategoriya = requireArguments().get("katposition")
                 var result = txtPlayScore.text.toString().toInt()
+
 
                 var bundle = Bundle()
         bundle.putString("sarlavha",sarlavha)

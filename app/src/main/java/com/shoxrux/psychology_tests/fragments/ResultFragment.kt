@@ -59,6 +59,7 @@ class ResultFragment : Fragment() {
 
 
         checkResult()
+        setNavigation()
 
 
 
@@ -77,8 +78,28 @@ class ResultFragment : Fragment() {
                     .replace(R.id.frameLayout,introductionFragment).commit()
             }
         })
+
+
+
+
+        binding.orqaga.setOnClickListener{
+            var bundle = Bundle()
+            bundle.putString("test",sarlavha.toString())
+            bundle.putInt("position",options.toString().toInt())
+            bundle.putInt("katposition",kategoriya.toString().toInt())
+
+
+            val introductionFragment = IntroductionFragment()
+            introductionFragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout,introductionFragment).commit()
+        }
         
         return binding.root
+    }
+
+    private fun setNavigation() {
+
     }
 
     private fun checkResult() {
@@ -99,16 +120,16 @@ class ResultFragment : Fragment() {
         val middle = maxBall * 0.65
 
         if (result>=middle){
-            binding.savollarSoni.text = "Javobi: ${sortedlist[0].high}"
+            binding.javobii.text = "Javobi: ${sortedlist[0].high}"
         }else{
-            binding.savollarSoni.text = "Javobi: ${sortedlist[0].middle}"
+            binding.javobii.text = "Javobi: ${sortedlist[0].middle}"
         }
 
-        binding.natija.text = "Maksimal to'plangan ball: ${maxBall}"
-        binding.javobi.text = "Testda ishlangan natija: ${result}"
-        binding.variantlarSoni.text = "Variantlar soni: ${options}"
-
-        binding.ortakoeffitsiyenti.text = "O'rta koeffitsiyenti: ${middle}"
+//        binding.natija.text = "Maksimal to'plangan ball: ${maxBall}"
+//        binding.javobi.text = "Testda ishlangan natija: ${result}"
+//        binding.variantlarSoni.text = "Variantlar soni: ${options}"
+//
+//        binding.ortakoeffitsiyenti.text = "O'rta koeffitsiyenti: ${middle}"
     }
 
 
