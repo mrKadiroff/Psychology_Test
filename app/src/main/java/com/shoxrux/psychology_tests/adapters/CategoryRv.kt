@@ -5,17 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shoxrux.psychology_tests.databinding.CategoryLayoutBinding
 import com.shoxrux.psychology_tests.models.Category_Names
+import com.shoxrux.psychology_tests.room.CategoryEntity
 
 
-class CategoryRv(var list: ArrayList<Category_Names>, var onItemClickListener: OnItemClickListener): RecyclerView.Adapter<CategoryRv.Vh>() {
+class CategoryRv(var list: List<CategoryEntity>, var onItemClickListener: OnItemClickListener): RecyclerView.Adapter<CategoryRv.Vh>() {
 
     inner class Vh(var itemUserBinding: CategoryLayoutBinding) :
         RecyclerView.ViewHolder(itemUserBinding.root) {
 
 
-        fun onBind(category: Category_Names) {
-            itemUserBinding.titlee.text = category.title
-            itemUserBinding.rasm.setImageResource(category.image)
+        fun onBind(category: CategoryEntity) {
+            itemUserBinding.titlee.text = category.category_name
+            itemUserBinding.rasm.setImageResource(category.category_img!!)
             itemUserBinding.root.setOnClickListener{
                 onItemClickListener.onItemClick(category,adapterPosition)
             }
@@ -36,7 +37,7 @@ class CategoryRv(var list: ArrayList<Category_Names>, var onItemClickListener: O
     }
 
     interface OnItemClickListener{
-        fun onItemClick(malumotlar: Category_Names,position: Int)
+        fun onItemClick(malumotlar: CategoryEntity,position: Int)
     }
 
 }

@@ -16,6 +16,7 @@ import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.room.AppDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,13 +44,14 @@ class TestFragment : Fragment() {
     lateinit var testsRv: TestsRv
     lateinit var binding: FragmentTestBinding
     lateinit var sortedlist:ArrayList<Test_Values>
+    lateinit var appDatabase: AppDatabase
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTestBinding.inflate(layoutInflater,container,false)
-
+        appDatabase = AppDatabase.getInstance(binding.root.context)
         sortedlist = ArrayList()
         setRv()
 
@@ -84,9 +86,11 @@ class TestFragment : Fragment() {
         val value = requireArguments().get("kategoriya")
         val positioni = requireArguments().get("position")
 
+        val categoryByPosition =
+            appDatabase.categoryDao().getCategoryByPosition(positioni.toString().toInt())
 
 
-
+        binding.sarlavhasi.text = categoryByPosition.category_name
 
         val customObjects = getTestsValues()
         customObjects.forEach {
@@ -95,7 +99,7 @@ class TestFragment : Fragment() {
             }
         }
 
-        binding.sarlavhasi.text = value.toString()
+
 
         testsRv = TestsRv(sortedlist,object :TestsRv.OnItemClickListener{
             override fun onItemClick(malumotlar: Test_Values, position: Int) {
@@ -180,6 +184,8 @@ class TestFragment : Fragment() {
         super.onDetach()
 
     }
+
+
 
 
 

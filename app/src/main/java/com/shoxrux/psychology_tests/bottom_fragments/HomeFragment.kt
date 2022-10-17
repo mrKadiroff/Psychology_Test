@@ -11,6 +11,9 @@ import com.shoxrux.psychology_tests.adapters.CategoryRv
 import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
 import com.shoxrux.psychology_tests.fragments.TestFragment
 import com.shoxrux.psychology_tests.models.Category_Names
+import com.shoxrux.psychology_tests.room.AppDatabase
+import com.shoxrux.psychology_tests.room.CategoryEntity
+import com.shoxrux.psychology_tests.room.scrores.ScoresEntity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,14 +40,16 @@ class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
     lateinit var categoryRv: CategoryRv
+    lateinit var appDatabase: AppDatabase
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
-
+        appDatabase = AppDatabase.getInstance(binding.root.context)
         setRv()
+        insertToRoom()
 
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -60,13 +65,39 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun insertToRoom() {
+        val customObjects = getCustomObjects()
+
+        val allCategory = appDatabase.categoryDao().getAllCategory()
+
+        if (allCategory.isNullOrEmpty()){
+            appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Erkaklar uchun",R.drawable.mujik,0))
+            appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Ayollar uchun",R.drawable.women,1))
+            appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Xarakteringiz qanaqa?",R.drawable.personality,2))
+        }
+
+        val allScores = appDatabase.scoresDao().getAllScores()
+
+        if (allScores.isNullOrEmpty()){
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Rashkchimisiz",3,5,7,9))
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Yigitlar nega sizga qaramaydi??",4,6,8,10))
+        }
+
+
+    }
+
     private fun setRv() {
         val customObjects = getCustomObjects()
-        categoryRv = CategoryRv(customObjects,object :CategoryRv.OnItemClickListener{
-            override fun onItemClick(malumotlar: Category_Names, position: Int) {
+
+        val allCategory = appDatabase.categoryDao().getAllCategory()
+
+
+
+        categoryRv = CategoryRv(allCategory,object :CategoryRv.OnItemClickListener{
+            override fun onItemClick(malumotlar: CategoryEntity, position: Int) {
 
                 var bundle = Bundle()
-                bundle.putString("kategoriya",malumotlar.title)
+                bundle.putString("kategoriya",malumotlar.category_name)
                 bundle.putInt("position",position)
 
                 val testFragment = TestFragment()

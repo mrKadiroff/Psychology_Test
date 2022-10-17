@@ -14,7 +14,9 @@ import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.interfaces.IOnBackPressed
 import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.models.Results
+import com.shoxrux.psychology_tests.models.Scores
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.room.AppDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,12 +44,14 @@ class ResultFragment : Fragment() {
     lateinit var binding: FragmentResultBinding
     private val TAG = "ResultFragment"
     lateinit var sortedlist:ArrayList<Results>
+    lateinit var appDatabase: AppDatabase
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentResultBinding.inflate(layoutInflater,container,false)
+        appDatabase = AppDatabase.getInstance(binding.root.context)
         val options = requireArguments().get("options")
         val sarlavha = requireArguments().get("sarlavha")
         val kategoriya = requireArguments().get("katposition")
@@ -108,6 +112,12 @@ class ResultFragment : Fragment() {
         val savolSoni = requireArguments().get("savollarSoni").toString().toInt()
         val options = requireArguments().get("options").toString().toInt()
         val customObjects = getCustomObjects()
+        val scoresValue = getScores()
+
+        val scoresByTitle = appDatabase.scoresDao().getScoresByTitle(sarlavha.toString())
+
+
+
 
         customObjects.forEach {
           if (it.title == sarlavha){
@@ -119,11 +129,22 @@ class ResultFragment : Fragment() {
         var maxBall = savolSoni * options
         val middle = maxBall * 0.65
 
-        if (result>=middle){
-            binding.javobii.text = "Javobi: ${sortedlist[0].high}"
+
+        if (result >= scoresByTitle.minimum!!&&result< scoresByTitle.premiddle!!){
+            binding.javobii.text = "Javobi: juda kam"
+        }else if (result >= scoresByTitle.premiddle!! && result< scoresByTitle.middle!!){
+            binding.javobii.text = "Javobi: o'rtachadan sal kamro"
+        }else if (result >= scoresByTitle.middle!! && result< scoresByTitle.high!!){
+            binding.javobii.text = "Javobi: o'rtacha"
         }else{
-            binding.javobii.text = "Javobi: ${sortedlist[0].middle}"
+            binding.javobii.text = "Javobi: Yuqori"
         }
+
+//        if (result>=middle){
+//            binding.javobii.text = "Javobi: ${sortedlist[0].high}"
+//        }else{
+//            binding.javobii.text = "Javobi: ${sortedlist[0].middle}"
+//        }
 
 //        binding.natija.text = "Maksimal to'plangan ball: ${maxBall}"
 //        binding.javobi.text = "Testda ishlangan natija: ${result}"
@@ -143,6 +164,19 @@ class ResultFragment : Fragment() {
             add(Results("Rashkchimisiz","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
             add(Results("Jinsiy hayotga tayyormisiz?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
             add(Results("Kosmetikasiz hayot nima?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+
+
+            return customObjects
+        }
+    }
+
+
+    private fun getScores():ArrayList<Scores> {
+        val customObjects = ArrayList<Scores>()
+
+        customObjects.apply {
+            add(Scores("Rashkchimisiz",3,5,7,9))
+
 
 
             return customObjects

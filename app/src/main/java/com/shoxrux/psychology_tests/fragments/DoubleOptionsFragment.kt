@@ -91,7 +91,7 @@ class DoubleOptionsFragment : Fragment() {
 
         sarlavha = requireArguments().get("sarlavha").toString()
 
-        binding.title.text = sarlavha
+
 
 
 
@@ -100,6 +100,12 @@ class DoubleOptionsFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun setProgressBar() {
+        binding.progressBar.progress = 1
+        binding.progressBar.max = savollar.size
+    }
+
 
     private fun initView() {
         binding.apply {
@@ -124,6 +130,7 @@ class DoubleOptionsFragment : Fragment() {
 
 
             birinchiSavol.setOnClickListener {
+                setProgressBar()
                 var text = txtPlayScore.text.toString().toInt()
                 val first = text + 1
                 txtPlayScore.text = first.toString()
@@ -132,6 +139,7 @@ class DoubleOptionsFragment : Fragment() {
             }
 
             ikkinchiSavol.setOnClickListener {
+                setProgressBar()
                 var text = txtPlayScore.text.toString().toInt()
                 val second = text + 2
                 txtPlayScore.text = second.toString()
@@ -156,6 +164,8 @@ class DoubleOptionsFragment : Fragment() {
 
     private fun showNextQuestion() {
         qIndex++
+        binding.progressBar.progress = qIndex
+        binding.progressBar.max = savollar.size
         binding.apply {
             if (updateQueNo < savollar.size) {
                 tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
