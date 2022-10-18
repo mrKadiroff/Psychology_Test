@@ -40,8 +40,8 @@
         android:progressDrawable="@drawable/blueprogress"
         android:layout_weight="1"
         android:layout_marginTop="20sp"
-        app:layout_constraintStart_toStartOf="@id/birinchiSavol"
-        app:layout_constraintEnd_toEndOf="@id/birinchiSavol"
+        app:layout_constraintStart_toStartOf="@id/orqaga"
+        app:layout_constraintEnd_toEndOf="@id/tv_noOfQues"
         app:layout_constraintTop_toBottomOf="@id/questionss"
         android:minHeight="20dp"
         style="?android:progressBarStyleHorizontal"/>
@@ -88,102 +88,99 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:visibility="invisible"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
 
 
-
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:id="@+id/birinchiSavol"
+    <TextView
+        android:id="@+id/txt_play_score2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_question"
-        android:layout_marginHorizontal="12dp"
-        android:background="@drawable/ripple">
-
-        <TextView
-            android:id="@+id/firstQuestion"
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingVertical="12dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:textSize="14sp"
-            android:paddingHorizontal="18dp"
-            android:text="gfghhhhhhhhhhhhhhhlkkkkkklkkkkkkkkkkkkkk"
-            android:textColor="@color/white"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/txt_play_score"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RadioGroup
+        android:id="@+id/radiogrp"
         android:layout_width="match_parent"
-        android:id="@+id/ikkinchiSavol"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/birinchiSavol"
-        android:layout_marginHorizontal="12dp"
-        android:background="@drawable/ripple">
-
-        <TextView
-            android:id="@+id/secondQuestion"
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingVertical="12dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nextQuestionBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question"
+        app:layout_constraintVertical_bias="0.095">
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:textSize="14sp"
-            android:paddingHorizontal="18dp"
-            android:text="gfghhhhhhhhhhhhhhhlkkkkkklkkkkkkkkkkkkkk"
-            android:textColor="@color/white"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ripple"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:text="Option 1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ripple"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:text="Option 2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioButton1" />
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ripple"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:text="Option 3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:id="@+id/uchinchiSavol"
+    </RadioGroup>
+    <Button
+        android:id="@+id/nextQuestionBtn"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ikkinchiSavol"
-        android:layout_marginTop="12dp"
-        android:layout_marginHorizontal="12dp"
-        android:background="@drawable/ripple">
-
-        <TextView
-            android:id="@+id/thirdQuestion"
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingVertical="12dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:textSize="14sp"
-            android:paddingHorizontal="18dp"
-            android:text="gfghhhhhhhhhhhhhhhlkkkkkklkkkkkkkkkkkkkk"
-            android:textColor="@color/white"/>
+        android:layout_marginBottom="22dp"
+        android:padding="16dp"
+        android:text="Next Question"
+        android:textColor="#ffff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

@@ -165,41 +165,44 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
 
-            birinchiSavol.setOnClickListener {
-                setProgressBar()
-                var text = txtPlayScore.text.toString().toInt()
-              val first = text + 1
-              txtPlayScore.text = first.toString()
-              Log.d(TAG, "initView: ${text}")
-              showNextQuestion()
-          }
+            binding.apply {
 
-            ikkinchiSavol.setOnClickListener {
-                setProgressBar()
-                var text = txtPlayScore.text.toString().toInt()
-                val second = text + 2
-                txtPlayScore.text = second.toString()
-                Log.d(TAG, "initView: ${text}")
-                showNextQuestion()
+
+                radioButton1.setOnClickListener {
+                    txtPlayScore2.text = "1"
+                }
+                radioButton2.setOnClickListener {
+                    txtPlayScore2.text = "2"
+                }
+                radioButton3.setOnClickListener {
+                    txtPlayScore2.text = "3"
+                }
+
+                tvQuestion.text = savollar[qIndex]
+                radioButton1.text = variantlar[0]
+                radioButton2.text = variantlar[1]
+                radioButton3.text = variantlar[2]
+                // check options selected or not
+                // if selected then selected option correct or wrong
+                nextQuestionBtn.setOnClickListener {
+                    if (radiogrp.checkedRadioButtonId == -1) {
+                        Toast.makeText(binding.root.context,
+                            "Please select an options",
+                            Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        val increment = txtPlayScore2.text.toString().toInt()
+                        var text = txtPlayScore.text.toString().toInt()
+                        val first = text + increment
+                        txtPlayScore.text = first.toString()
+                        showNextQuestion()
+                        radiogrp.clearCheck()
+                    }
+                }
+                tvNoOfQues.text = "$updateQueNo/${savollar.size}"
+                tvQuestion.text = savollar[qIndex]
+
             }
-
-            uchinchiSavol.setOnClickListener {
-                setProgressBar()
-                var text = txtPlayScore.text.toString().toInt()
-                val third = text + 3
-                txtPlayScore.text = third.toString()
-                Log.d(TAG, "initView: ${text}")
-                showNextQuestion()
-            }
-
-            tvQuestion.text = savollar[qIndex]
-            firstQuestion.text = variantlar[0]
-            secondQuestion.text = variantlar[1]
-            thirdQuestion.text = variantlar[2]
-
-
-            tvNoOfQues.text = "$updateQueNo/${savollar.size}"
-            tvQuestion.text = savollar[qIndex]
 
 
         }
@@ -208,10 +211,15 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
     private fun showNextQuestion() {
 
+
+
+
+
         qIndex++
 
         binding.progressBar.progress = qIndex
         binding.progressBar.max = savollar.size
+
         binding.apply {
             if (updateQueNo < savollar.size) {
                 tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
@@ -219,11 +227,9 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
             }
             if (qIndex <= savollar.size - 1) {
                 tvQuestion.text = savollar[qIndex]
-                Log.d(TAG, "showNextQuestion: ${qIndex}")
-                firstQuestion.text = variantlar[qIndex * 3] // 2*4=8
-                secondQuestion.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
-                thirdQuestion.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
-
+                radioButton1.text = variantlar[qIndex * 3] // 2*4=8
+                radioButton2.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
+                radioButton3.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
             } else {
                 score = correct
 
@@ -232,21 +238,43 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
                 var bundle = Bundle()
-        bundle.putString("sarlavha",sarlavha)
-        bundle.putInt("options",3)
+                bundle.putString("sarlavha",sarlavha)
+                bundle.putInt("options",3)
                 bundle.putInt("result",result)
                 bundle.putInt("savollarSoni",savollar.size)
                 bundle.putInt("katposition",kategoriya.toString().toInt())
 
 
-        val resultFragment = ResultFragment()
-        resultFragment.arguments = bundle
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.frameLayout,resultFragment).commit()
+                val resultFragment = ResultFragment()
+                resultFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.frameLayout,resultFragment).commit()
             }
-
+            radiogrp.clearCheck()
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

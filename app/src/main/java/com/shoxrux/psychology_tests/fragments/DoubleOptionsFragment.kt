@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.FragmentDoubleOptionsBinding
 import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
@@ -129,29 +130,39 @@ class DoubleOptionsFragment : Fragment() {
 
 
 
-            birinchiSavol.setOnClickListener {
-                setProgressBar()
-                var text = txtPlayScore.text.toString().toInt()
-                val first = text + 1
-                txtPlayScore.text = first.toString()
-                Log.d(TAG, "initView: ${text}")
-                showNextQuestion()
+            radioButton1.setOnClickListener {
+                txtPlayScore2.text = "1"
             }
-
-            ikkinchiSavol.setOnClickListener {
-                setProgressBar()
-                var text = txtPlayScore.text.toString().toInt()
-                val second = text + 2
-                txtPlayScore.text = second.toString()
-                Log.d(TAG, "initView: ${text}")
-                showNextQuestion()
+            radioButton2.setOnClickListener {
+                txtPlayScore2.text = "2"
             }
-
 
 
             tvQuestion.text = savollar[qIndex]
-            firstQuestion.text = variantlar[0]
-            secondQuestion.text = variantlar[1]
+            radioButton1.text = variantlar[0]
+            radioButton2.text = variantlar[1]
+            // check options selected or not
+            // if selected then selected option correct or wrong
+            nextQuestionBtn.setOnClickListener {
+                if (radiogrp.checkedRadioButtonId == -1) {
+                    Toast.makeText(binding.root.context,
+                        "Please select an options",
+                        Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    val increment = txtPlayScore2.text.toString().toInt()
+                    var text = txtPlayScore.text.toString().toInt()
+                    val first = text + increment
+                    txtPlayScore.text = first.toString()
+                    showNextQuestion()
+                    radiogrp.clearCheck()
+                }
+            }
+
+
+
+
+
 
 
 
@@ -173,9 +184,9 @@ class DoubleOptionsFragment : Fragment() {
             }
             if (qIndex <= savollar.size - 1) {
                 tvQuestion.text = savollar[qIndex]
-                Log.d(TAG, "showNextQuestion: ${qIndex}")
-                firstQuestion.text = variantlar[qIndex * 2] // 2*4=8
-                secondQuestion.text = variantlar[qIndex * 2 + 1] //  2*4+1=9
+                radioButton1.text = variantlar[qIndex * 2] // 2*4=8
+                radioButton2.text = variantlar[qIndex * 2 + 1] //  2*4+1=9
+
 
 
             } else {
