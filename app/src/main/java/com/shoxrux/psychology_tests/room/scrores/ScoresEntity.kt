@@ -16,8 +16,6 @@ data class ScoresEntity (
     @ColumnInfo(name = "min")
     var minimum: Int? = null,
 
-    @ColumnInfo(name = "premidd")
-    var premiddle: Int?=null,
 
     @ColumnInfo(name = "middle")
     var middle: Int?=null,
@@ -26,6 +24,15 @@ data class ScoresEntity (
     @ColumnInfo(name = "high")
     var high: Int?=null,
 
+    @ColumnInfo(name = "firstBtn")
+    var firstButton: Double? = null,
+
+    @ColumnInfo(name = "secondBtn")
+    var secondButton: Double? = null,
+
+
+    @ColumnInfo(name = "thirdBtn")
+    var thirdButton: Double? = null,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

@@ -50,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
-        android:text="Siz o'ta darajada pizdabol odamsiz va buni odamlardan yashirmasdan tik yuziga aytasiz va yomon odat"
         app:layout_constraintTop_toBottomOf="@id/recomen"
         android:layout_marginTop="27dp"
         android:paddingHorizontal="20dp"

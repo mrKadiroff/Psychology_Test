@@ -107,6 +107,7 @@ class TestFragment : Fragment() {
                 bundle.putString("test",malumotlar.sarlavha)
                 bundle.putString("test2",value.toString())
                 bundle.putInt("position",malumotlar.options)
+                bundle.putInt("varyant",malumotlar.quantityOptions.toInt())
                 bundle.putInt("katposition",positioni.toString().toInt())
 
                         val introductionFragment = IntroductionFragment()
@@ -159,15 +160,16 @@ class TestFragment : Fragment() {
         val customObjects = ArrayList<Test_Values>()
 
         customObjects.apply {
-            add(Test_Values("Rashkchimisiz","16","2",0,2,))
-            add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",0,4))
-            add(Test_Values("Sevgida omadlimisiz?","12","3",0,3))
-            add(Test_Values("Jinsiy hayotga tayyormisiz?","22","2",0,2))
+            add(Test_Values("Qanday ayollar sizni o'ziga maftun qiladi?","5","1",0,3))
+            add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",1,4))
 
-            add(Test_Values("Yigitlar nega sizga qaramaydi??","15","4",1,3))
-            add(Test_Values("Kosmetikasiz hayot nima?","22","2",1,2))
-            add(Test_Values("Tabiiy go'zallikka nima yetsin","9","2",1,3))
-            add(Test_Values("Qaynona bilan kelishish?","22","2",1,5))
+
+            add(Test_Values("Odamlar bilan chiqishib keta olasizmi?","10","2",2,3))
+
+
+
+
+
 
 
             return customObjects

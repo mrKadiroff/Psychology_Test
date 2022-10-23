@@ -83,9 +83,11 @@ class IntroductionFragment : Fragment() {
         val sarlavha = requireArguments().get("test")
         val sarlavha2 = requireArguments().get("test2")
         val options = requireArguments().get("position")
+        val varyant = requireArguments().get("varyant")
         val kategoriya = requireArguments().get("katposition")
 
         binding.heading.text = "${sarlavha}"
+        binding.savollar.text = "${varyant}"
 
 
         binding.orqaga.setOnClickListener{
@@ -106,6 +108,7 @@ class IntroductionFragment : Fragment() {
             var bundle =Bundle()
             bundle.putString("sarlavha",sarlavha.toString())
             bundle.putInt("katposition",kategoriya.toString().toInt())
+            bundle.putInt("varyant",varyant.toString().toInt())
 
             when(options){
                 2->{

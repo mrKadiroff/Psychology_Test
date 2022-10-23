@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.shoxrux.psychology_tests.room.scrores.ScoresDao
 import com.shoxrux.psychology_tests.room.scrores.ScoresEntity
 
-@Database(entities = [CategoryEntity::class,ScoresEntity::class], version = 2)
+@Database(entities = [CategoryEntity::class,ScoresEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao

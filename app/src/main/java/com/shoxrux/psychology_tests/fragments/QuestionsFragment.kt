@@ -23,6 +23,7 @@ import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.room.AppDatabase
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -51,6 +52,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
     }
 
     lateinit var binding: FragmentQuestionsBinding
+    lateinit var appDatabase: AppDatabase
     lateinit var savollar:Array<String>
     lateinit var variantlar:Array<String>
     private var score = 0
@@ -62,47 +64,79 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
     private var sarlavha = ""
     // create string for question, answer and options
     private var questions0 = arrayOf(
-        "Q.1. If a computer has more than one processor then it is known as?",
-        "Q.2. Full form of URL is?",
-        "Q.3. One kilobyte (KB) is equal to")
+        "Do'stlaringiz sizni tug'ilgan kunlar, kechalar va boshqa bayramlarga taklif qilishadimi?",
+        "Notanish odamlar davrasida tez moslashib keta olasizmi?",
+        "To'satdan e'tibor markaziga tushib qoldingiz, o'zingizni qanday his etasiz?",
+        "Notanish auditoriyda ilk bor nutq so'zlayapsiz, nimalarni his etasiz?",
+        "Boshqalarni ko'nglini topishni yoqtirasizmi? agar shunday bo'lsa o'sha davrani markazida bo'lish sizga ma'qulmi?",
+        "Notanish odamdan yo'lni ko'rsatib yuborishini so'rash siz uchun qiyinmi?",
+        "Tanishlar davrasida hazil qila olasizmi?",
+        "Hozirjavobmisiz?",
+        "Siz biroz taniydigan yoki umuman tanimaydigan inson bilan uchrashishga ketyapsiz. Siz u insonni oldindan bilishingiz va o'rtada aloqalar bo'lsihi kerak deb ehtiyoj sezasizmi?",
+        "Siz chiroyli qiz(yigit) uchratib qoldingiz ammo uni uchrashuvga taklif etolmadingiz. O'zingizni qanday his etasiz?"
+        )
     private var answer0 = arrayOf(
         "Multiprocessor",
         "Uniform Resource Locator",
         "1,024 bytes")
     private var options0 = arrayOf(
-        "Uniprocess",
-        "Multiprocessor",
-        "Multithreaded",
-        "Multiprogramming",
-        "Uniform Resource Locator",
-        "Uniform Resource Linkwrong",
-        "Uniform Registered Link",
-        "Unified Resource Link",
-        "1,000 bits")
+        "Sizsiz hech qanday kecha bo'lishi mumkin emas, do'stlaringiz sizni albatta taklif qilishadi",
+        "Odatada chaqirishadi lekin har doim ham emas",
+        "Shovqinli kechalarni yaxshi ko'rmaysiz, shuning uchun hech kim sizni taklif qilmaydi",
+        "Ha, bu mening asosiy hususiyatim",
+        "faqatgina kayfiyatim yaxshi bo'lsagina",
+        "Yo'q, sinfdoshlaringiz yoshligingizdan sizni antisocial ekanligingiz uchun yoqtirishmaydi",
+        "Menga yoqadi bu hol",
+        "Siz uchun qiziqarli, lekin biroz o'zingizni noqulay his etasiz",
+        "Yer yorilsayu-ichiga kirib ketsam, bu hol menga yoqmaydi",
+        "Biroz hayajonlanaman",
+        "Biroz o'zimni yo'qotib qo'yaman va bu qo'rquvga aylanib ketishi mumkin",
+        "goh tinchlanaman goh hayajonlanaman",
+        "Ha, albatta. Davrani markazida bo'lishni yoqtiraman",
+        "Buning hammasi davradagi odamlar va mening ayni paytdagi kayfiyatimga bog'liq",
+        "Yo'q, menga odamlarning e'tibori yoqmaydi",
+        "Yuz foiz adashib qolmagunimcha hech kimdan yordam so'ramayman",
+        "So'rashim mumkin, lekin keyin o'zimni g'alati his etaman",
+        "Bu men uchun umuman muammo emas, istagan odamdan yo'lni ko'rsatib yuborishini iltimos qila olaman",
+        "Ha bu davrani qizdirishning eng ajoyib usuli, mehmonlar o'zlarini qulay his etishadi",
+        "Ha, bazan hazillashib turaman",
+        "Yo'q, men faqat tinglab o'tirishni yaxshi ko'raman",
+        "Ha, bu fe'l-atvorimning asosiy hususiyati",
+        "Vaziyatga qarayman",
+        "Yo'q, bu hususiyat menga tegishli emas",
+        "Ha, qachonki do'stingiz bilan uchrashsangiz, o'zingizni qulay his etasiz.",
+        "Har doim emas, lekin bazida shunday bo'lishi kerak",
+        "Yo'q, faqat uchrashuv haqida o'ylayman",
+        "Hayotda har narsa bo'lib turadi, keyingi safar urinib ko'raman",
+        "Menga farqi yo'q",
+        "Bundan keyin hech kim bilan uchrashmayman"
+
+        )
 
 
     private var questions1 = arrayOf(
-        "Q.1. Sevgiga ishonasizmi??",
-        "Q.2. Siz uchun sex nima?",
-        "Q.3. Jinsiy tarbiya muhimmi?",
-        "Q.4. Opishishning foydali tomonlari?")
-    private var answer1 = arrayOf(
-        "Ha",
-        "Yo'q",
-        "Bilmayman")
+        "Ishdan charchab keldingiz va kechki ovqat tanavvul qilib, biroz dam olmoqchisiz. Ammo, ovqat tayyorlanmagan, xona betartib va ayolingiz hech narsa bo'lmagandek televizor tomosha qilyaptdi. Siz...",
+        "Sizning ayolingiz to'y yubileyingizni qanday nishonlash to'g'risida fikringizni so'rayapdi",
+        "Ayolingiz sizdan sayohat qilishni iltimos qilyapdi. Siz qayerda dam olishni afzal ko'rasiz",
+        "Ayollardagi siz hurmat qiladigan jihatlar",
+        "Bolaligingiz qay tarzda o'tgan?")
+
     private var options1 = arrayOf(
-        "Ha",
-        "Yo'q",
-        "Dinnaxuy",
-        "Pashol",
-        "Sizni sevaman",
-        "Yolg'on gapirmang",
-        "Sevgi bu sarob",
-        "Seksualni erkak",
-        "Jalab bo'lma",
-        "Seksning siri",
-        "Om yalsh",
-        "Gandon kalla")
+        "Tabassum qilasiz va sevgan yoringizni restoranda ovqatlanishga taklif qilasiz",
+        "Janjal ko'tarasiz",
+        "Ayolingiz bilan yuzma-yuz gaplashib olasiz va birgalikda ovqat pishirasizlar",
+        "Butunlay ayolingizning zimmasiga topshirasiz, u nima desa shu bo'ladi",
+        "Juda kamxarajat bo'lishini taminlaysiz va kam sonli mehmonlarni chaqirasiz",
+        "Tabiat qo'ynida barbekyu va dengiz taomlari bilan nishonlaysiz. Va u yerga barcha tanishlaringizni taklif qilasiz",
+        "Okean bo'yida, qimmatli lyuksa restoranda",
+        "Tabiat bilan o'ralgan manzarali joyda",
+        "Qishloqdagi uyda",
+        "Tejamkorlik, ovqat tayyorlay bilish, bolalarga g'amxo'rlik qilish, tikish, meva-sabzavotlar yetishtirish",
+        "Chiroyli tashqi-ko'rinish, yaxshi kiyinishi va odamlar bilan yaxshi chiqishib keta olishi",
+        "Romantik, san'at va kulinariyaga qiziqishi va oilaviy dam olishlarni tashkillashtira olishi",
+        "Otangiz sizni haqiqiy erkak qilib tarbiyalagan",
+        "Onangiz sizga g'amxo'rlik qilgan",
+        "Bobo-buvilaringiz qo'lida tarbiyalangansiz")
 
 
 
@@ -114,7 +148,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentQuestionsBinding.inflate(layoutInflater,container,false)
-
+        appDatabase = AppDatabase.getInstance(binding.root.context)
 
 
          sarlavha = requireArguments().get("sarlavha").toString()
@@ -122,6 +156,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
 
+        Log.d(TAG, "onCreateView: ${sarlavha}")
 
             initView()
 
@@ -148,11 +183,11 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
             when(sarlavha){
-                "Sevgida omadlimisiz?" ->{
+                "Odamlar bilan chiqishib keta olasizmi?" ->{
                     savollar = questions0
                     variantlar = options0
                 }
-                "Yigitlar nega sizga qaramaydi??" ->{
+                "Qanday ayollar sizni o'ziga maftun qiladi?" ->{
                     savollar = questions1
                     variantlar = options1
                 }
@@ -163,19 +198,18 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
             }
 
 
-
-
+            val scoresByTitle = appDatabase.scoresDao().getScoresByTitle(sarlavha)
             binding.apply {
 
 
                 radioButton1.setOnClickListener {
-                    txtPlayScore2.text = "1"
+                    txtPlayScore2.text = scoresByTitle.firstButton.toString()
                 }
                 radioButton2.setOnClickListener {
-                    txtPlayScore2.text = "2"
+                    txtPlayScore2.text = scoresByTitle.secondButton.toString()
                 }
                 radioButton3.setOnClickListener {
-                    txtPlayScore2.text = "3"
+                    txtPlayScore2.text = scoresByTitle.thirdButton.toString()
                 }
 
                 tvQuestion.text = savollar[qIndex]
@@ -191,8 +225,8 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                             Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        val increment = txtPlayScore2.text.toString().toInt()
-                        var text = txtPlayScore.text.toString().toInt()
+                        val increment = txtPlayScore2.text.toString().toDouble()
+                        var text = txtPlayScore.text.toString().toDouble()
                         val first = text + increment
                         txtPlayScore.text = first.toString()
                         showNextQuestion()
@@ -234,13 +268,15 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                 score = correct
 
                 var kategoriya = requireArguments().get("katposition")
-                var result = txtPlayScore.text.toString().toInt()
+                var result = txtPlayScore.text.toString().toDouble()
+                val varyant = requireArguments().get("varyant")
 
 
                 var bundle = Bundle()
                 bundle.putString("sarlavha",sarlavha)
                 bundle.putInt("options",3)
-                bundle.putInt("result",result)
+                bundle.putInt("varyant",varyant.toString().toInt())
+                bundle.putDouble("result",result)
                 bundle.putInt("savollarSoni",savollar.size)
                 bundle.putInt("katposition",kategoriya.toString().toInt())
 

@@ -57,6 +57,7 @@ class ResultFragment : Fragment() {
         val kategoriya = requireArguments().get("katposition")
         val result = requireArguments().get("result")
         val savolSoni = requireArguments().get("savollarSoni")
+        val varyant = requireArguments().get("varyant")
         sortedlist = ArrayList()
 
 
@@ -74,7 +75,7 @@ class ResultFragment : Fragment() {
                 bundle.putString("test",sarlavha.toString())
                 bundle.putInt("position",options.toString().toInt())
                 bundle.putInt("katposition",kategoriya.toString().toInt())
-
+                bundle.putInt("varyant",varyant.toString().toInt())
 
                 val introductionFragment = IntroductionFragment()
                 introductionFragment.arguments = bundle
@@ -91,7 +92,7 @@ class ResultFragment : Fragment() {
             bundle.putString("test",sarlavha.toString())
             bundle.putInt("position",options.toString().toInt())
             bundle.putInt("katposition",kategoriya.toString().toInt())
-
+            bundle.putInt("varyant",varyant.toString().toInt())
 
             val introductionFragment = IntroductionFragment()
             introductionFragment.arguments = bundle
@@ -108,7 +109,7 @@ class ResultFragment : Fragment() {
 
     private fun checkResult() {
         val sarlavha = requireArguments().get("sarlavha")
-        val result = requireArguments().get("result").toString().toInt()
+        val result = requireArguments().get("result").toString().toDouble()
         val savolSoni = requireArguments().get("savollarSoni").toString().toInt()
         val options = requireArguments().get("options").toString().toInt()
         val customObjects = getCustomObjects()
@@ -130,15 +131,13 @@ class ResultFragment : Fragment() {
         val middle = maxBall * 0.65
 
 
-        if (result >= scoresByTitle.minimum!!&&result< scoresByTitle.premiddle!!){
-            binding.javobii.text = "Javobi: juda kam"
-        }else if (result >= scoresByTitle.premiddle!! && result< scoresByTitle.middle!!){
-            binding.javobii.text = "Javobi: o'rtachadan sal kamro"
-        }else if (result >= scoresByTitle.middle!! && result< scoresByTitle.high!!){
-            binding.javobii.text = "Javobi: o'rtacha"
-        }else{
-            binding.javobii.text = "Javobi: Yuqori"
-        }
+        if (result <= scoresByTitle.minimum!!){
+            binding.javobii.text = sortedlist[0].low
+        }else if (result >scoresByTitle.minimum!! && result< scoresByTitle.high!!){
+            binding.javobii.text = sortedlist[0].middle
+        }else if (result>= scoresByTitle.high!!){
+            binding.javobii.text = sortedlist[0].high
+      }
 
 //        if (result>=middle){
 //            binding.javobii.text = "Javobi: ${sortedlist[0].high}"
@@ -158,12 +157,8 @@ class ResultFragment : Fragment() {
         val customObjects = ArrayList<Results>()
 
         customObjects.apply {
-            add(Results("Sevgida omadlimisiz?","Sizni sevgida omadli deb bo'lmaydi, haqiqiy loosersiz va ozgina dalbayoblik jihatlaringiz ham yo'q emas","Siz krasavchiksiz va hamma qizlar sizga kampot"))
-            add(Results("Yigitlar nega sizga qaramaydi??","Yigitlar sizga qaramasligining sababi siz o'zingizga bo'lgan ishonchingiz past","Sizga hamma yigitlar qaraydi va siz juda ham chiroyli qizsiz"))
-            add(Results("Tabiiy go'zallikka nima yetsin","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
-            add(Results("Rashkchimisiz","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
-            add(Results("Jinsiy hayotga tayyormisiz?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
-            add(Results("Kosmetikasiz hayot nima?","Siz o'zingizga tabiiy ingredientlarni ishlatasiz","Sizda notabiiy bo'lgan pamadalrni ko'p ishlatasiz"))
+            add(Results("Odamlar bilan chiqishib keta olasizmi?","Ochig'ini aytadigan bo'lsak, siz odamlar bilan uncha tez chiqishib keta olmaysiz. Siz o'zini chki dunyosida yashaydigan odamsiz. Ammo o'zingizga qo'ygan hayotiy cheklovlaringizga qaramay do'stlaringiz sizni sevishadi va hurmat qilishadi","Siz ikki tomonli fe'l-atvorga egasiz. Bir tomonlama juda uyatchang odam bo'lsangiz,ammo ba'zida istalgan davraga moslashib ketganingizni o'zingiz ham sezmay qolasiz.Har qanday davrada o'zingizni qulay his etishingiz uchun qandaydir tashqaridan turtki kerak ya'ni sizni gapiritishga majburlaydigan holat bo'lishi kerak.","Siz nafaqat o'zingizning tanishlaringiz oldida, balki istalgan davrada tezda moslashib keta olasiz. Hammani ko'nglini topib, istalgan odam bilan osonlikcha chiqishib keta olasiz. Eng qiziqarli jihati sizning harakatlaringiz juda tabiiy va chiroyli chiqadi"))
+            add(Results("Qanday ayollar sizni o'ziga maftun qiladi?","Sizga haqiqiy juftihalol emas balki o'ynash(xushtor) kerak.Sizni oila qurish, g'amxo'rlik va romantika qiziqtirmaydi. Siz ayolingizni do'st-u birodarlingiz oldida ko'z-ko'z qilshni hohlaysiz. Ammo esingizdan chiqarmang. Bu go'zallikning oqibati har doim ham sizga ma'qul bo'lmasligi mumkin.","Sizga do'st emas balki sizni cho'miltirib qo'yadigan, ovqatlantiradigan va sizni himoya qiladigan ikkinchi ona kerak. Qo'shimchasiga u sizdan itoatkorlikni talab qilishi mumkin","Sizga do'st emas balki sizni cho'miltirib qo'yadigan, ovqatlantiradigan va sizni himoya qiladigan ikkinchi ona kerak. Qo'shimchasiga u sizdan itoatkorlikni talab qilishi mumkin"))
 
 
             return customObjects

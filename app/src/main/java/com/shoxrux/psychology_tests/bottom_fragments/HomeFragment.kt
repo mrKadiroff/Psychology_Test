@@ -73,14 +73,14 @@ class HomeFragment : Fragment() {
         if (allCategory.isNullOrEmpty()){
             appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Erkaklar uchun",R.drawable.mujik,0))
             appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Ayollar uchun",R.drawable.women,1))
-            appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Xarakteringiz qanaqa?",R.drawable.personality,2))
+            appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Munosabatlar",R.drawable.munosabatlar,2))
         }
 
         val allScores = appDatabase.scoresDao().getAllScores()
 
         if (allScores.isNullOrEmpty()){
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Rashkchimisiz",3,5,7,9))
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Yigitlar nega sizga qaramaydi??",4,6,8,10))
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Odamlar bilan chiqishib keta olasizmi?",10,11,18,2.1,1.0,1.11))
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Qanday ayollar sizni o'ziga maftun qiladi?",7,8,21,1.0,2.0,3.0))
         }
 
 
@@ -119,11 +119,16 @@ class HomeFragment : Fragment() {
         customObjects.apply {
             add(Category_Names("Erkaklar uchun",R.drawable.mujik))
             add(Category_Names("Ayollar uchun",R.drawable.women))
-            add(Category_Names("Xarakteringiz qanaqa?",R.drawable.personality))
+            add(Category_Names("Munosabatlar",R.drawable.munosabatlar))
 
 
             return customObjects
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setRv()
     }
 
     companion object {
