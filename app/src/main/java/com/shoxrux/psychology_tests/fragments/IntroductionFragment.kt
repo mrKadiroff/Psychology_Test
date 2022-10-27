@@ -86,11 +86,11 @@ class IntroductionFragment : Fragment() {
         val varyant = requireArguments().get("varyant")
         val kategoriya = requireArguments().get("katposition")
 
-        binding.heading.text = "${sarlavha}"
+        binding.sarlavha.text = "${sarlavha}"
         binding.savollar.text = "${varyant}"
 
 
-        binding.orqaga.setOnClickListener{
+        binding.nazad.setOnClickListener{
 
             var bundle = Bundle()
             bundle.putString("kategoriya",sarlavha2.toString())

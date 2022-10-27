@@ -3,6 +3,7 @@ package com.shoxrux.psychology_tests
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import com.shoxrux.psychology_tests.bottom_fragments.ArticleFragment
 import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.bottom_fragments.InfoFragment
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         openMainFragment()
 

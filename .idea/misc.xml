@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/bg1.xml" value="0.208" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/blueprogress.xml" value="0.208" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.209" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2555" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/menyubg.xml" value="0.22" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/recommended_bg.xml" value="0.1775" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/ripple.xml" value="0.208" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/drawable/time_bg.xml" value="0.2085" />
@@ -14,12 +17,13 @@
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_article.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_double_options.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_four_options.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_info.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_introduction.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_questions.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_null.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_questions.xml" value="0.22" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_result.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_settings.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/fragment_test.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/test_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Intel i3-9100F/AndroidStudioProjects/Psychology_Tests/app/src/main/res/layout/time_over_dialog.xml" value="0.36666666666666664" />

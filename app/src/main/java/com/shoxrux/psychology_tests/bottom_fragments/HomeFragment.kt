@@ -1,11 +1,13 @@
 package com.shoxrux.psychology_tests.bottom_fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.adapters.CategoryRv
 import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
@@ -48,9 +50,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
-        setRv()
-        insertToRoom()
 
+        insertToRoom()
+        setView()
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -63,6 +65,11 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun setView() {
+        binding.progressBar.progress = 4
+        binding.progressBar.max = 9
     }
 
     private fun insertToRoom() {
@@ -92,6 +99,51 @@ class HomeFragment : Fragment() {
         val allCategory = appDatabase.categoryDao().getAllCategory()
 
 
+        binding.titlee.text = allCategory[0].category_name
+        binding.titlee2.text = allCategory[1].category_name
+        binding.titlee3.text = allCategory[2].category_name
+
+        binding.apply {
+
+            backgrounddd.setOnClickListener {
+                var bundle = Bundle()
+                bundle.putString("kategoriya",allCategory[0].category_name)
+                bundle.putInt("position",0)
+
+                val testFragment = TestFragment()
+                testFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.frameLayout,testFragment).commit()
+            }
+
+            backgrounddd2.setOnClickListener {
+                var bundle = Bundle()
+                bundle.putString("kategoriya",allCategory[1].category_name)
+                bundle.putInt("position",1)
+
+                val testFragment = TestFragment()
+                testFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.frameLayout,testFragment).commit()
+            }
+
+            backgrounddd3.setOnClickListener {
+                var bundle = Bundle()
+                bundle.putString("kategoriya",allCategory[2].category_name)
+                bundle.putInt("position",2)
+
+                val testFragment = TestFragment()
+                testFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.frameLayout,testFragment).commit()
+            }
+
+
+        }
+
 
         categoryRv = CategoryRv(allCategory,object :CategoryRv.OnItemClickListener{
             override fun onItemClick(malumotlar: CategoryEntity, position: Int) {
@@ -109,7 +161,7 @@ class HomeFragment : Fragment() {
 
         })
 
-        binding.rv.adapter = categoryRv
+//        binding.rv.adapter = categoryRv
     }
 
 
@@ -129,7 +181,20 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setRv()
+        (activity as MainActivity).showBottomNavigation()
     }
+
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        (activity as MainActivity).hideBottomNavigation()
+//    }
+//
+//    override fun onDetach() {
+//        (activity as MainActivity).showBottomNavigation()
+//        super.onDetach()
+//
+//    }
 
     companion object {
         /**

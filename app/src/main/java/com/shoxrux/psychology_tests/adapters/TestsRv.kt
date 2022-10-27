@@ -2,7 +2,9 @@ package com.shoxrux.psychology_tests.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.CategoryLayoutBinding
 import com.shoxrux.psychology_tests.databinding.TestLayoutBinding
 import com.shoxrux.psychology_tests.models.Category_Names
@@ -17,8 +19,23 @@ class TestsRv(var list: ArrayList<Test_Values>, var onItemClickListener: OnItemC
 
         fun onBind(test: Test_Values) {
             itemUserBinding.heading.text = test.sarlavha
-            itemUserBinding.daqiqa.text = test.duration
-            itemUserBinding.raqami.text = test.quantityOptions
+            itemUserBinding.minutes.text = test.duration
+
+            if (adapterPosition == 0){
+                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_first)
+                itemUserBinding.karta.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(26,0,29,0)
+
+                }
+
+
+            }else if (adapterPosition == list.lastIndex){
+                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_third)
+            }else{
+                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_second)
+            }
+
+
             itemUserBinding.root.setOnClickListener{
                 onItemClickListener.onItemClick(test,adapterPosition)
             }

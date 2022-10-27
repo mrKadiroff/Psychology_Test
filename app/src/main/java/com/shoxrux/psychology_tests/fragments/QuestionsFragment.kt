@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
@@ -182,6 +183,8 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
         binding.apply {
 
 
+
+
             when(sarlavha){
                 "Odamlar bilan chiqishib keta olasizmi?" ->{
                     savollar = questions0
@@ -195,45 +198,134 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                     savollar = questions0
                     variantlar = options0
                 }
+                "O'zingizga ishonasizmi?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                  makeInvisible()
+                }
+                "Mushaklarni o'stirish?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                    makeInvisible()
+                }
+                "Stressga bardoshlimisiz?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                    makeInvisible()
+                }
+                "Sir saqlay olasizmi?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                    makeInvisible()
+                }
+                "Depressiyaga chidamlilik?" ->{
+                    savollar = questions0
+                    variantlar = options0
+                    makeInvisible()
+                }
             }
 
 
             val scoresByTitle = appDatabase.scoresDao().getScoresByTitle(sarlavha)
             binding.apply {
 
+                var a = 100
+                backgrounddd.setOnClickListener {
 
-                radioButton1.setOnClickListener {
-                    txtPlayScore2.text = scoresByTitle.firstButton.toString()
+                    check.visibility = View.VISIBLE
+                    check2.visibility = View.INVISIBLE
+                    check3.visibility = View.INVISIBLE
+
+
+                    if (a == 1){
+                        check.visibility = View.INVISIBLE
+                        a++
+                    }else{
+                        check.visibility = View.VISIBLE
+                        check2.visibility = View.INVISIBLE
+                        check3.visibility = View.INVISIBLE
+                        a = 1
+                    }
+
+                    if (check.visibility == View.VISIBLE){
+                        txtPlayScore2.text = scoresByTitle.firstButton.toString()
+                    }else{
+                        txtPlayScore2.text = "0"
+                    }
+
+
+
+//                    backgrounddd.setBackgroundTintList(ContextCompat.getColorStateList(binding.root.context, R.color.purple_200));
                 }
-                radioButton2.setOnClickListener {
-                    txtPlayScore2.text = scoresByTitle.secondButton.toString()
+                backgrounddd2.setOnClickListener {
+                    check2.visibility = View.VISIBLE
+                    check.visibility = View.INVISIBLE
+                    check3.visibility = View.INVISIBLE
+                    if (a == 1){
+                        check2.visibility = View.INVISIBLE
+                        a++
+                    }else{
+                        check2.visibility = View.VISIBLE
+                        check.visibility = View.INVISIBLE
+                        check3.visibility = View.INVISIBLE
+                        a = 1
+                    }
+
+                    if (check2.visibility == View.VISIBLE){
+                        txtPlayScore2.text = scoresByTitle.secondButton.toString()
+                    }else{
+                        txtPlayScore2.text = "0"
+                    }
+
                 }
-                radioButton3.setOnClickListener {
-                    txtPlayScore2.text = scoresByTitle.thirdButton.toString()
+                backgrounddd3.setOnClickListener {
+                    check3.visibility = View.VISIBLE
+                    check2.visibility = View.INVISIBLE
+                    check.visibility = View.INVISIBLE
+
+                    if (a == 1){
+                        check3.visibility = View.INVISIBLE
+                        a++
+                    }else{
+                        check3.visibility = View.VISIBLE
+                        check2.visibility = View.INVISIBLE
+                        check.visibility = View.INVISIBLE
+                        a = 1
+                    }
+
+                    if (check3.visibility == View.VISIBLE){
+                        txtPlayScore2.text = scoresByTitle.thirdButton.toString()
+                    }else{
+                        txtPlayScore2.text = "0"
+                    }
                 }
 
                 tvQuestion.text = savollar[qIndex]
-                radioButton1.text = variantlar[0]
-                radioButton2.text = variantlar[1]
-                radioButton3.text = variantlar[2]
+                titlee.text = variantlar[0]
+                titlee2.text = variantlar[1]
+                titlee3.text = variantlar[2]
                 // check options selected or not
                 // if selected then selected option correct or wrong
-                nextQuestionBtn.setOnClickListener {
-                    if (radiogrp.checkedRadioButtonId == -1) {
-                        Toast.makeText(binding.root.context,
-                            "Please select an options",
-                            Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
+                start.setOnClickListener {
+
+                    if (txtPlayScore2.text == "0"){
+                        Toast.makeText(binding.root.context, "Iltimos tanlang", Toast.LENGTH_SHORT).show()
+                    }else{
+                        check.visibility = View.INVISIBLE
+                        check2.visibility = View.INVISIBLE
+                        check3.visibility = View.INVISIBLE
                         val increment = txtPlayScore2.text.toString().toDouble()
                         var text = txtPlayScore.text.toString().toDouble()
                         val first = text + increment
                         txtPlayScore.text = first.toString()
                         showNextQuestion()
-                        radiogrp.clearCheck()
+                        txtPlayScore2.text = "0"
                     }
+
+
+
+
                 }
-                tvNoOfQues.text = "$updateQueNo/${savollar.size}"
                 tvQuestion.text = savollar[qIndex]
 
             }
@@ -256,14 +348,13 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
         binding.apply {
             if (updateQueNo < savollar.size) {
-                tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
                 updateQueNo++
             }
             if (qIndex <= savollar.size - 1) {
                 tvQuestion.text = savollar[qIndex]
-                radioButton1.text = variantlar[qIndex * 3] // 2*4=8
-                radioButton2.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
-                radioButton3.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
+                titlee.text = variantlar[qIndex * 3] // 2*4=8
+                titlee2.text = variantlar[qIndex * 3 + 1] //  2*4+1=9
+                titlee3.text = variantlar[qIndex * 3 + 2] //  2*4+2=10
             } else {
                 score = correct
 
@@ -287,7 +378,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                     .addToBackStack(null)
                     .replace(R.id.frameLayout,resultFragment).commit()
             }
-            radiogrp.clearCheck()
+
         }
 
 
@@ -314,6 +405,17 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
     }
+
+    private fun makeInvisible(){
+        binding.backgrounddd.visibility = View.GONE
+        binding.backgrounddd2.visibility = View.GONE
+        binding.backgrounddd3.visibility = View.GONE
+        binding.start.visibility = View.GONE
+        binding.savolBg.visibility = View.GONE
+        binding.txtPlayScore.text = "Hali test qo'shilmagan iltimos orqaga qayting"
+    }
+
+
 
 
 

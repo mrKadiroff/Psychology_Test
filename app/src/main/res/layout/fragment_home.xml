@@ -19,7 +19,7 @@
         android:id="@+id/recomend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recommended"
+        android:text="Hush kelibsiz, Shoxrux"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/black"
@@ -27,41 +27,101 @@
         android:textSize="23sp"/>
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:cardCornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/recomend"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="22dp">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/recommended_bg">
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintTop_toBottomOf="@id/recomend"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/menyubg">
+
+
+
+
+
+            <ImageView
+                android:layout_width="22sp"
+                android:layout_height="16sp"
+                app:layout_constraintEnd_toStartOf="@id/savollar"
+                app:layout_constraintTop_toTopOf="@id/savollar"
+                app:layout_constraintBottom_toBottomOf="@id/savollar"
+                android:src="@drawable/question"
+                android:id="@+id/icon1"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Siz rostdan ham \njahldormisiz?"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:text="15/99"
+                android:layout_marginStart="12dp"
+                android:id="@+id/savollar"
+                android:textColor="@color/black"
+               app:layout_constraintEnd_toStartOf="@id/icon2"
+                app:layout_constraintTop_toTopOf="@id/icon2"
+                app:layout_constraintBottom_toBottomOf="@id/icon2"
+                android:layout_marginEnd="15dp"
+
+                />
+
+
+            <ImageView
+                android:id="@+id/icon2"
+                android:layout_width="20dp"
+                android:layout_height="16dp"
+                android:src="@drawable/soat"
+                app:layout_constraintBottom_toBottomOf="@id/minutes"
+                app:layout_constraintEnd_toStartOf="@id/minutes"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="@id/minutes" />
+
+            <TextView
+                android:id="@+id/minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 minute"
+                android:layout_margin="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
+
+                />
+
+            <TextView
+                android:id="@+id/nomi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Siz rostdan ham jahldormisiz?"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
 
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.59000003" />
 
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nomi"
+                app:layout_constraintStart_toStartOf="@id/nomi"
+                android:text="Ushbu testni yeching va rostadan ham jahldormisiz bilib oling."
+                android:paddingEnd="16sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/descrtopyion"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-    </androidx.cardview.widget.CardView>
+
 
 
     <TextView
@@ -89,6 +149,23 @@
         android:textColor="@color/black"/>
 
 
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="12sp"
+            android:theme="@style/ProgressBarStyle"
+            android:progressDrawable="@drawable/blueprogress"
+            android:layout_weight="1"
+            android:layout_marginTop="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="@id/number"
+            app:layout_constraintTop_toBottomOf="@id/worked"
+            android:minHeight="20dp"
+            style="?android:progressBarStyleHorizontal"/>
+
+
     <View
         android:id="@+id/liniya"
         android:layout_width="match_parent"
@@ -96,7 +173,7 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="20dp"
         android:background="#EFE2E2"
-        app:layout_constraintTop_toBottomOf="@id/number"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar"
         tools:layout_editor_absoluteX="12dp" />
 
 
@@ -113,17 +190,85 @@
         android:layout_marginTop="20sp"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        tools:listitem="@layout/category_layout"
-        app:spanCount="2"
-        android:layout_marginHorizontal="10dp"
-        android:id="@+id/rv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/category"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="12dp"
+            android:id="@+id/backgrounddd"
+            android:background="@drawable/bg1"
+            app:layout_constraintTop_toBottomOf="@id/category"
+            android:layout_height="80dp">
+
+
+            <TextView
+                android:id="@+id/titlee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Erkaklar uchun"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/backgrounddd2"
+            android:layout_marginBottom="2dp"
+            android:scaleY="1.04"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="10.21dp"
+            android:background="@drawable/bg2"
+            app:layout_constraintTop_toBottomOf="@id/backgrounddd"
+            android:layout_height="80dp">
+
+
+            <TextView
+                android:id="@+id/titlee2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Erkaklar uchun"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/backgrounddd3"
+            android:layout_marginBottom="2dp"
+            android:scaleY="1.04"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="11.249dp"
+            android:background="@drawable/bg3"
+            app:layout_constraintTop_toBottomOf="@id/backgrounddd2"
+            android:layout_height="80dp">
+
+
+            <TextView
+                android:id="@+id/titlee3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Erkaklar uchun"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

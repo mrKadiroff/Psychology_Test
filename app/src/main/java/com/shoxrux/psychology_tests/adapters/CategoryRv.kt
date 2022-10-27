@@ -2,7 +2,10 @@ package com.shoxrux.psychology_tests.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.marginRight
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.CategoryLayoutBinding
 import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.room.CategoryEntity
@@ -15,8 +18,24 @@ class CategoryRv(var list: List<CategoryEntity>, var onItemClickListener: OnItem
 
 
         fun onBind(category: CategoryEntity) {
+
+            if (adapterPosition == 0){
+                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.bg1)
+            }else if (adapterPosition == 1){
+                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.bg2)
+                var rasmer = 10.249
+                itemUserBinding.backgrounddd.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(14,0,10,0)
+
+                }
+
+
+
+            }
+
+
+
             itemUserBinding.titlee.text = category.category_name
-            itemUserBinding.rasm.setImageResource(category.category_img!!)
             itemUserBinding.root.setOnClickListener{
                 onItemClickListener.onItemClick(category,adapterPosition)
             }

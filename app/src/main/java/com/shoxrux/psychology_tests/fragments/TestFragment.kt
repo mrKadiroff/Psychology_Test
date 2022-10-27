@@ -90,7 +90,7 @@ class TestFragment : Fragment() {
             appDatabase.categoryDao().getCategoryByPosition(positioni.toString().toInt())
 
 
-        binding.sarlavhasi.text = categoryByPosition.category_name
+//        binding.sarlavhasi.text = categoryByPosition.category_name
 
         val customObjects = getTestsValues()
         customObjects.forEach {
@@ -161,10 +161,17 @@ class TestFragment : Fragment() {
 
         customObjects.apply {
             add(Test_Values("Qanday ayollar sizni o'ziga maftun qiladi?","5","1",0,3))
+            add(Test_Values("O'zingizga ishonasizmi?","5","3",0,3))
+            add(Test_Values("Mushaklarni o'stirish?","5","2",0,3))
             add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",1,4))
+            add(Test_Values("Qaynonangizni yashi koring?","12","1",1,4))
+            add(Test_Values("Hayot haqida?","12","1",1,4))
 
 
             add(Test_Values("Odamlar bilan chiqishib keta olasizmi?","10","2",2,3))
+            add(Test_Values("Stressga bardoshlimisiz?","10","2",2,3))
+            add(Test_Values("Sir saqlay olasizmi?","10","2",2,3))
+            add(Test_Values("Depressiyaga chidamlilik?","10","2",2,3))
 
 
 

@@ -87,7 +87,21 @@ class ResultFragment : Fragment() {
 
 
 
-        binding.orqaga.setOnClickListener{
+        binding.nazad.setOnClickListener{
+            var bundle = Bundle()
+            bundle.putString("test",sarlavha.toString())
+            bundle.putInt("position",options.toString().toInt())
+            bundle.putInt("katposition",kategoriya.toString().toInt())
+            bundle.putInt("varyant",varyant.toString().toInt())
+
+            val introductionFragment = IntroductionFragment()
+            introductionFragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout,introductionFragment).commit()
+        }
+
+
+        binding.start.setOnClickListener {
             var bundle = Bundle()
             bundle.putString("test",sarlavha.toString())
             bundle.putInt("position",options.toString().toInt())
