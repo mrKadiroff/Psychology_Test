@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.FragmentInfoBinding
@@ -45,6 +46,7 @@ class SettingsFragment : Fragment() {
             override fun handleOnBackPressed() {
 
                 requireActivity().finish()
+                Toast.makeText(binding.root.context, "Fucked", Toast.LENGTH_SHORT).show()
 
 
             }
