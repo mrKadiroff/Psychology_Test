@@ -288,9 +288,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
                 var a = 100
                 backgrounddd.setOnClickListener {
-                    backgrounddd.setBackgroundResource(R.drawable.selectedfirst)
-                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
-                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
+
 
                     if (a == 1){
                         backgrounddd.setBackgroundResource(R.drawable.selectedfirst)
@@ -302,7 +300,8 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                         a = 1
                     }
 
-
+                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
+                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
 
 
 
@@ -310,10 +309,9 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                 }
                 backgrounddd2.setOnClickListener {
 
-                    backgrounddd2.setBackgroundResource(R.drawable.selectedmiddle)
 
-                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
-                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
+
+
                     if (a == 1){
                         backgrounddd2.setBackgroundResource(R.drawable.selectedmiddle)
                         txtPlayScore2.text = scoresByTitle.secondButton.toString()
@@ -324,14 +322,14 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                         a = 1
                     }
 
-
+                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
+                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
 
                 }
                 backgrounddd3.setOnClickListener {
 
-                    backgrounddd3.setBackgroundResource(R.drawable.selectredlast)
-                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
-                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
+
+
 
                     if (a == 1){
                         backgrounddd3.setBackgroundResource(R.drawable.selectredlast)
@@ -342,6 +340,8 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                         txtPlayScore2.text = "0"
                         a = 1
                     }
+                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
+                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
 
 
                 }
