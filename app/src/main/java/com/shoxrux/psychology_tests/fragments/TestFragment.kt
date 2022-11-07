@@ -1,5 +1,6 @@
 package com.shoxrux.psychology_tests.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -102,10 +103,12 @@ class TestFragment : Fragment() {
 
 
         testsRv = TestsRv(sortedlist,object :TestsRv.OnItemClickListener{
+            @SuppressLint("SuspiciousIndentation")
             override fun onItemClick(malumotlar: Test_Values, position: Int) {
                 var bundle = Bundle()
                 bundle.putString("test",malumotlar.sarlavha)
                 bundle.putString("test2",value.toString())
+                bundle.putString("intro",malumotlar.introduction)
                 bundle.putInt("position",malumotlar.options)
                 bundle.putInt("varyant",malumotlar.quantityOptions.toInt())
                 bundle.putInt("katposition",positioni.toString().toInt())
@@ -160,18 +163,18 @@ class TestFragment : Fragment() {
         val customObjects = ArrayList<Test_Values>()
 
         customObjects.apply {
-            add(Test_Values("Qanday ayollar sizni o'ziga maftun qiladi?","5","1",0,3))
-            add(Test_Values("O'zingizga ishonasizmi?","5","3",0,3))
-            add(Test_Values("Mushaklarni o'stirish?","5","2",0,3))
-            add(Test_Values("Jinsiy olatingizdan mamnunmisiz?","12","1",1,4))
-            add(Test_Values("Qaynonangizni yashi koring?","12","1",1,4))
-            add(Test_Values("Hayot haqida?","12","1",1,4))
+            add(Test_Values("Qanday ayollar sizni o'ziga maftun qiladi?","Bu test ma'lum bir vaziyatlarni sizga namoyish qiladi va siz o'zingizga eng mos bo'lgan javobni belgilang","5","1",0,3))
+            add(Test_Values("Haqiqiy erkakmisiz yoki yosh bola?","Qanaqa erkaksiz? Mustaqil, o'ziga ishongan va o'zining oilasi va sevgan ayoli uchun mas'uliyatni bo'yniga oladigan erkakmisiz yoki burnini oqizib yurgan yosh bolamisiz?","5","1",0,3))
+            add(Test_Values("Mushaklarni o'stirish?","ha","5","2",0,3))
+            add(Test_Values("Sizga qanaqa erkak to'g'ri keladi?","Har bir ayolning orzusidagi erkagi bo'ladi.Kimdir ko'cha bezoririlaridan himoya qiladigan supermenni oz=rzu qilsa yana kimdir o'zi bilan bir-xil fikrlaydigan turmush o'rtoq bilan birga bo'lishni hoxlaydi","7","1",1,3))
+            add(Test_Values("Qaynonangizni yashi koring?","ha","12","1",1,4))
+            add(Test_Values("Hayot haqida?","12","ha","1",1,4))
 
 
-            add(Test_Values("Odamlar bilan chiqishib keta olasizmi?","10","2",2,3))
-            add(Test_Values("Stressga bardoshlimisiz?","10","2",2,3))
-            add(Test_Values("Sir saqlay olasizmi?","10","2",2,3))
-            add(Test_Values("Depressiyaga chidamlilik?","10","2",2,3))
+            add(Test_Values("Odamlar bilan chiqishib keta olasizmi?","Odamlar qanday muloqotga kirishasiz? Har qanday sharoitda o'zingizni qulay his etasizmi? Odamlar bilan tez chiqishib keta oladigan turiga mansubmisiz? Bu testni yechish orqali yuqoridagi barcha savollarga javob olasiz","10","2",2,3))
+            add(Test_Values("Stressga bardoshlimisiz?","ha","10","2",2,3))
+            add(Test_Values("Sir saqlay olasizmi?","ha","10","2",2,3))
+            add(Test_Values("Depressiyaga chidamlilik?","ha","10","2",2,3))
 
 
 

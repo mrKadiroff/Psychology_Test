@@ -10,15 +10,36 @@ import com.shoxrux.psychology_tests.bottom_fragments.InfoFragment
 import com.shoxrux.psychology_tests.bottom_fragments.SettingsFragment
 import com.shoxrux.psychology_tests.databinding.ActivityMainBinding
 import com.shoxrux.psychology_tests.interfaces.IOnBackPressed
+import com.shoxrux.psychology_tests.room.AppDatabase
+import com.shoxrux.psychology_tests.room.themes.ThemesEntity
+import com.shoxrux.psychology_tests.sharedpreferences.SaveData
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val fragment = HomeFragment()
+    lateinit var appDatabase: AppDatabase
+    private lateinit var saveData: SaveData
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        saveData = SaveData(this)
+
+
+
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        appDatabase = AppDatabase.getInstance(this)
+
+        val allThemes = appDatabase.themesDao().getAllThemes()
+        if (allThemes.isNullOrEmpty()){
+                    appDatabase.themesDao().addThemes(themesEntity = ThemesEntity(false))
+        }
+
+
+
+
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         openMainFragment()
 
@@ -77,6 +98,15 @@ class MainActivity : AppCompatActivity() {
     {
         binding.menuBottom.visibility = View.GONE
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (saveData.loadDarkModeState() == true){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
 

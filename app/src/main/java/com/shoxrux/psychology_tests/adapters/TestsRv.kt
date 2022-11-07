@@ -22,17 +22,17 @@ class TestsRv(var list: ArrayList<Test_Values>, var onItemClickListener: OnItemC
             itemUserBinding.minutes.text = test.duration
 
             if (adapterPosition == 0){
-                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_first)
+                itemUserBinding.karta.setBackgroundResource(R.drawable.test1)
                 itemUserBinding.karta.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    setMargins(26,0,29,0)
+                    setMargins(27,0,29,0)
 
                 }
 
 
             }else if (adapterPosition == list.lastIndex){
-                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_third)
+                itemUserBinding.karta.setBackgroundResource(R.drawable.test3)
             }else{
-                itemUserBinding.karta.setBackgroundResource(R.drawable.bg_second)
+                itemUserBinding.karta.setBackgroundResource(R.drawable.test2)
             }
 
 

@@ -7,9 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
+import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.FragmentInfoBinding
 import com.shoxrux.psychology_tests.databinding.FragmentSettingsBinding
+import com.shoxrux.psychology_tests.fragments.TestFragment
+import com.shoxrux.psychology_tests.room.AppDatabase
+import com.shoxrux.psychology_tests.room.themes.ThemesEntity
+import com.shoxrux.psychology_tests.sharedpreferences.SaveData
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,13 +41,17 @@ class SettingsFragment : Fragment() {
     }
 
     lateinit var binding: FragmentSettingsBinding
+    lateinit var appDatabase: AppDatabase
+    var ison = false
+    private lateinit var saveData: SaveData
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(layoutInflater,container,false)
-
+        appDatabase = AppDatabase.getInstance(binding.root.context)
+        saveData = SaveData(binding.root.context)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 
@@ -52,8 +62,43 @@ class SettingsFragment : Fragment() {
             }
         })
 
+
+
+        if (saveData.loadDarkModeState() == true){
+            binding.btn.setChecked(true);
+        }
+
+
+
+
+
+
+
+
+        binding.btn?.setOnCheckedChangeListener({ _ , isChecked ->
+            if (isChecked){
+                Toast.makeText(binding.root.context, "nightmode", Toast.LENGTH_SHORT).show()
+                saveData.setDarkModeState(true)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                setFragments()
+            }else{
+                Toast.makeText(binding.root.context, "lightmode", Toast.LENGTH_SHORT).show()
+                saveData.setDarkModeState(false)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                setFragments()
+            }
+        })
+
+
+
         return binding.root
     }
+
+    private fun setFragments() {
+        (activity as MainActivity).binding.menuBottom.setItemSelected(R.id.home)
+
+    }
+
 
     companion object {
         /**

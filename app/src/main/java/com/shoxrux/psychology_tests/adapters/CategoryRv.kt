@@ -20,9 +20,9 @@ class CategoryRv(var list: List<CategoryEntity>, var onItemClickListener: OnItem
         fun onBind(category: CategoryEntity) {
 
             if (adapterPosition == 0){
-                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.bg1)
+                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.turkum1)
             }else if (adapterPosition == 1){
-                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.bg2)
+                itemUserBinding.backgrounddd.setBackgroundResource(R.drawable.turkum2)
                 var rasmer = 10.249
                 itemUserBinding.backgrounddd.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                     setMargins(14,0,10,0)

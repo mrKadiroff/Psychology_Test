@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="12dp"
             android:id="@+id/backgrounddd"
-            android:background="@drawable/bg1"
+            android:background="@drawable/turkum1"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_height="80dp">
 

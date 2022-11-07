@@ -88,6 +88,8 @@ class HomeFragment : Fragment() {
         if (allScores.isNullOrEmpty()){
             appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Odamlar bilan chiqishib keta olasizmi?",10,11,18,2.1,1.0,1.11))
             appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Qanday ayollar sizni o'ziga maftun qiladi?",7,8,21,1.0,2.0,3.0))
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Haqiqiy erkakmisiz yoki yosh bola?",5,9,15,1.0,2.0,3.0))
+            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Sizga qanaqa erkak to'g'ri keladi?",7,14,15,1.0,2.0,3.0))
         }
 
 

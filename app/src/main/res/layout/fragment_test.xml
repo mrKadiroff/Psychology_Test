@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Testni tanlang"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintTop_toTopOf="@id/nazad"
         app:layout_constraintBottom_toBottomOf="@id/nazad"
         app:layout_constraintStart_toEndOf="@id/nazad"

@@ -44,12 +44,17 @@ class IntroductionFragment : Fragment() {
 
 
         navigate()
-
+        setUI()
 
 
         onbackPressed()
 
         return binding.root
+    }
+
+    private fun setUI() {
+        val intro = requireArguments().get("intro")
+        binding.intro.text=intro.toString()
     }
 
     private fun onbackPressed() {

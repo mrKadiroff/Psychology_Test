@@ -200,7 +200,7 @@
             android:layout_marginHorizontal="12dp"
             android:id="@+id/backgrounddd"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bg1"
+            android:background="@drawable/turkum1"
             app:layout_constraintTop_toBottomOf="@id/category"
             android:layout_height="80dp">
 
@@ -231,7 +231,7 @@
             android:layout_marginHorizontal="12dp"
             android:layout_marginStart="14dp"
             android:layout_marginEnd="10.21dp"
-            android:background="@drawable/bg2"
+            android:background="@drawable/turkum2"
             app:layout_constraintTop_toBottomOf="@id/backgrounddd"
             android:layout_height="80dp">
 
@@ -262,7 +262,7 @@
             android:layout_marginHorizontal="12dp"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="11.249dp"
-            android:background="@drawable/bg3"
+            android:background="@drawable/turkum3"
             app:layout_constraintTop_toBottomOf="@id/backgrounddd2"
             android:layout_height="80dp">
 
