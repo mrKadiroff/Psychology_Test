@@ -46,7 +46,7 @@
             app:layout_constraintHeight_percent="0.7"
             android:id="@+id/raklama"
             app:layout_constraintTop_toBottomOf="@id/nazad"
-            android:background="@drawable/rectanglee"
+            android:background="@drawable/tortbyrchak"
             android:layout_marginHorizontal="14dp"
             android:layout_marginTop="14dp">
 

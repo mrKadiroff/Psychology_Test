@@ -17,6 +17,7 @@ import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.ombor.setTestNames
 import com.shoxrux.psychology_tests.room.AppDatabase
 
 // TODO: Rename parameter arguments, choose names that match
@@ -93,7 +94,7 @@ class TestFragment : Fragment() {
 
 //        binding.sarlavhasi.text = categoryByPosition.category_name
 
-        val customObjects = getTestsValues()
+        val customObjects = setTestNames.getTestsValues()
         customObjects.forEach {
             if (it.position == positioni){
                 sortedlist.add(it)
@@ -121,32 +122,6 @@ class TestFragment : Fragment() {
 
 
 
-//                when(malumotlar.options){
-//                    2->{
-//                        val doubleOptionsFragment = DoubleOptionsFragment()
-//                        doubleOptionsFragment.arguments = bundle
-//                        parentFragmentManager.beginTransaction()
-//                            .addToBackStack(null)
-//                            .replace(R.id.frameLayout,doubleOptionsFragment).commit()
-//                    }
-//                    3->{
-//                        val questionsFragment = QuestionsFragment()
-//                        questionsFragment.arguments = bundle
-//                        parentFragmentManager.beginTransaction()
-//                            .addToBackStack(null)
-//                            .replace(R.id.frameLayout,questionsFragment).commit()
-//                    }
-//
-//                    4->{
-//                        val fourOptionsFragment = FourOptionsFragment()
-//                        fourOptionsFragment.arguments = bundle
-//                        parentFragmentManager.beginTransaction()
-//                            .addToBackStack(null)
-//                            .replace(R.id.frameLayout,fourOptionsFragment).commit()
-//                    }
-//                }
-
-
 
             }
 
@@ -159,32 +134,6 @@ class TestFragment : Fragment() {
     }
 
 
-    private fun getTestsValues():ArrayList<Test_Values> {
-        val customObjects = ArrayList<Test_Values>()
-
-        customObjects.apply {
-            add(Test_Values("Qanday ayollar sizni o'ziga maftun qiladi?","Bu test ma'lum bir vaziyatlarni sizga namoyish qiladi va siz o'zingizga eng mos bo'lgan javobni belgilang","5","1",0,3))
-            add(Test_Values("Haqiqiy erkakmisiz yoki yosh bola?","Qanaqa erkaksiz? Mustaqil, o'ziga ishongan va o'zining oilasi va sevgan ayoli uchun mas'uliyatni bo'yniga oladigan erkakmisiz yoki burnini oqizib yurgan yosh bolamisiz?","5","1",0,3))
-            add(Test_Values("Mushaklarni o'stirish?","ha","5","2",0,3))
-            add(Test_Values("Sizga qanaqa erkak to'g'ri keladi?","Har bir ayolning orzusidagi erkagi bo'ladi.Kimdir ko'cha bezoririlaridan himoya qiladigan supermenni oz=rzu qilsa yana kimdir o'zi bilan bir-xil fikrlaydigan turmush o'rtoq bilan birga bo'lishni hoxlaydi","7","1",1,3))
-            add(Test_Values("Qaynonangizni yashi koring?","ha","12","1",1,4))
-            add(Test_Values("Hayot haqida?","12","ha","1",1,4))
-
-
-            add(Test_Values("Odamlar bilan chiqishib keta olasizmi?","Odamlar qanday muloqotga kirishasiz? Har qanday sharoitda o'zingizni qulay his etasizmi? Odamlar bilan tez chiqishib keta oladigan turiga mansubmisiz? Bu testni yechish orqali yuqoridagi barcha savollarga javob olasiz","10","2",2,3))
-            add(Test_Values("Stressga bardoshlimisiz?","ha","10","2",2,3))
-            add(Test_Values("Sir saqlay olasizmi?","ha","10","2",2,3))
-            add(Test_Values("Depressiyaga chidamlilik?","ha","10","2",2,3))
-
-
-
-
-
-
-
-            return customObjects
-        }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

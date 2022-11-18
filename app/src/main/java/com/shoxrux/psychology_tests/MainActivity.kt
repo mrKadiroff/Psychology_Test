@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity() {
         appDatabase = AppDatabase.getInstance(this)
 
         val allThemes = appDatabase.themesDao().getAllThemes()
-        if (allThemes.isNullOrEmpty()){
-                    appDatabase.themesDao().addThemes(themesEntity = ThemesEntity(false))
-        }
+
 
 
 
@@ -107,6 +105,12 @@ class MainActivity : AppCompatActivity() {
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+
+    fun rnd_int(min: Int, max: Int): Int {
+        var max = max
+        max -= min
+        return (Math.random() * ++max).toInt() + min
     }
 
 

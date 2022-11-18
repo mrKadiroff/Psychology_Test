@@ -1,10 +1,12 @@
 package com.shoxrux.psychology_tests.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +38,17 @@ class FourOptionsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_four_options, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).hideBottomNavigation()
+    }
+
+    override fun onDetach() {
+        (activity as MainActivity).showBottomNavigation()
+        super.onDetach()
+
     }
 
     companion object {

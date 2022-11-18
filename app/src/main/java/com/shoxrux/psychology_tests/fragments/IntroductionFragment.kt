@@ -88,11 +88,22 @@ class IntroductionFragment : Fragment() {
         val sarlavha = requireArguments().get("test")
         val sarlavha2 = requireArguments().get("test2")
         val options = requireArguments().get("position")
-        val varyant = requireArguments().get("varyant")
+        val varyant = requireArguments().get("varyant").toString().toInt()
         val kategoriya = requireArguments().get("katposition")
 
         binding.sarlavha.text = "${sarlavha}"
         binding.savollar.text = "${varyant}"
+
+        if (varyant<=10){
+           binding.minutes.text = "1 daqiqa"
+       } else if (varyant>10 && varyant<=20){
+            binding.minutes.text = "2 daqiqa"
+        }else if (varyant>20 && varyant<=30){
+            binding.minutes.text = "3 daqiqa"
+        }else if (varyant>30 && varyant<=40){
+            binding.minutes.text = "4 daqiqa"
+        }
+
 
 
         binding.nazad.setOnClickListener{

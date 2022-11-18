@@ -1,6 +1,7 @@
 package com.shoxrux.psychology_tests.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -17,13 +18,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.bottom_fragments.HomeFragment
 import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
 import com.shoxrux.psychology_tests.databinding.FragmentTestBinding
 import com.shoxrux.psychology_tests.models.Category_Names
+import com.shoxrux.psychology_tests.models.Scores
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.ombor.setData
+import com.shoxrux.psychology_tests.ombor.setScores
 import com.shoxrux.psychology_tests.room.AppDatabase
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -53,6 +60,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
     }
 
     lateinit var binding: FragmentQuestionsBinding
+    lateinit var sortedlist2:ArrayList<Scores>
     lateinit var appDatabase: AppDatabase
     lateinit var savollar:Array<String>
     lateinit var variantlar:Array<String>
@@ -137,29 +145,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
 
 
 
-    private var questions2 = arrayOf(
-        "Ishda siz bir talay muammolar va mojarolar ichida qoldingiz va siz...",
-        "Bayram yaqinlashyapdi va sizda ayolingizga sovg'a harid qilish uchun pul yo'q.Agar siz unga hech narsa olib bermasangiz u sizdan hafa bo'ladi...",
-        "Siz parkda qizingiz yoki ayolingiz bilan aylanib yuribsiz va oldingizdan ichib olgan mast inson chiqdi va uning janjal chiqarish istagi bor...",
-        "Oilaviy o'tiradigan kecha yaqinlashyabdi va sizning ayolingizda kiyishga hech narsasi yo'q va u juda xafa. Siz oyligingizni oldingiz, ammo bu pulni mashinangizni remont qilishga saqlab qo'yishingiz kerak. Bu vaziyatda siz..",
-        "Sizning yaxshi ayolingiz sizga syurpriz qilmoqchi bo'ldi va oilaviy byudjaetga katta ta'sir qiladigan sovg'a harid qildi...")
 
-    private var options2 = arrayOf(
-        "Ta'tilga chiqib ketasiz va boshqa kimdir bu ishni bajrishi kerak",
-        "Barcha sabr va irodangizni yig'ib yordam berishga kirishasiz va eng qiyin ishni zimmangizga olasiz",
-        "Ozgina vaqt tashqariga aylanib kelasiz va nima qilsih kerakligi to'g'risida o'ylab olasiz",
-        "Ayolingizga kompliment qilishga urinasiz va unga mayda uy yumushlarida qarashasiz",
-        "Siz hech narsa qilmaysiz chunki pulingiz yo'q va biror narsa o'ylab topishga endi kech bo'ldi.Ayolingiz sizdan hafa bo'lmaydi deb o'ylaysiz",
-        "Kichik bo'lsada taqinchoq olishga harakat qilasiz",
-        "Qizingiz bilan iloji boricha tezroq bu yerdan ketishga harakat qilasiz",
-        "Iloji boricha e'tibor bermaslikka harakat qilasiz va buning imkoni bo'lmasa mast odamga tarsaki tushurish orqali aqlini kirgizib qo'yasiz",
-        "Xushmuomalalik bilan tushuntirishga harakat qilasiz, agar bu ish bermasa qizingiz bilan shunchaki boshqa yerga ketasiz",
-        "Ayolingizga biror qarindoshi yoki singlisidan kiyim olib tushini masalahat berasiz, agar bu ish bermasa unga ozroq bo'lsada pulingizni berasiz va u o'ziga kiyim sotib oladi",
-        "Ayolingizga qancha hoxlasa shuncha pul berasiz, eng muhimi oila tinchligi va osoyishtaligi. Pulni keyin ham ishlab topaverasiz",
-        "Unga eng oddiy kiyimdaham juda chiroyli ekanligini aytasiz",
-        "Uning sizga qilgan e'tiboridan hursand bo'lasiz",
-        "Rahmat aytasiz va bunday boshqa qilmasligini aytasiz",
-        "Albatta siz uning sovg'asidan hursand bo'lasiz, lekin oila byudjeyiga bunday ta'sir qilishi yaxshi emas. Shunday ekan siz bu ishi noto'g'ri bo'lganini aytasiz")
 
 
     private var questions3 = arrayOf(
@@ -207,7 +193,7 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentQuestionsBinding.inflate(layoutInflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
-
+        sortedlist2 = ArrayList()
 
          sarlavha = requireArguments().get("sarlavha").toString()
 
@@ -252,8 +238,8 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
                     variantlar = options1
                 }
                 "Haqiqiy erkakmisiz yoki yosh bola?" ->{
-                    savollar = questions2
-                    variantlar = options2
+                    savollar =setData.ManOrBoy()
+                    variantlar = setData.ManOrBoyOptions()
                 }
                 "Sizga qanaqa erkak to'g'ri keladi?" ->{
                     savollar = questions3
@@ -286,62 +272,19 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
             val scoresByTitle = appDatabase.scoresDao().getScoresByTitle(sarlavha)
             binding.apply {
 
-                var a = 100
                 backgrounddd.setOnClickListener {
+                    selectedOptionStyle(backgrounddd,1)
 
-
-                    if (a == 1){
-                        backgrounddd.setBackgroundResource(R.drawable.selectedfirst)
-                        txtPlayScore2.text = scoresByTitle.firstButton.toString()
-                        a++
-                    }else{
-                        backgrounddd.setBackgroundResource(R.drawable.turkum1)
-                        txtPlayScore2.text = "0"
-                        a = 1
-                    }
-
-                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
-                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
-
-
-
-//                    backgrounddd.setBackgroundTintList(ContextCompat.getColorStateList(binding.root.context, R.color.purple_200));
                 }
                 backgrounddd2.setOnClickListener {
 
 
-
-
-                    if (a == 1){
-                        backgrounddd2.setBackgroundResource(R.drawable.selectedmiddle)
-                        txtPlayScore2.text = scoresByTitle.secondButton.toString()
-                        a++
-                    }else{
-                        backgrounddd2.setBackgroundResource(R.drawable.turkum2)
-                        txtPlayScore2.text = "0"
-                        a = 1
-                    }
-
-                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
-                    backgrounddd3.setBackgroundResource(R.drawable.turkum3)
+                    selectedOptionStyle(backgrounddd2,2)
 
                 }
                 backgrounddd3.setOnClickListener {
 
-
-
-
-                    if (a == 1){
-                        backgrounddd3.setBackgroundResource(R.drawable.selectredlast)
-                        txtPlayScore2.text = scoresByTitle.thirdButton.toString()
-                        a++
-                    }else{
-                        backgrounddd3.setBackgroundResource(R.drawable.turkum3)
-                        txtPlayScore2.text = "0"
-                        a = 1
-                    }
-                    backgrounddd.setBackgroundResource(R.drawable.turkum1)
-                    backgrounddd2.setBackgroundResource(R.drawable.turkum2)
+                    selectedOptionStyle(backgrounddd3,3)
 
 
                 }
@@ -381,6 +324,45 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
         }
     }
 
+    private fun selectedOptionStyle(view:ConstraintLayout,opt:Int) {
+
+
+
+        val customObjects2 = setScores.getScores()
+        customObjects2.forEach {
+            if (it.category_name == sarlavha){
+                sortedlist2.add(it)
+
+            }
+        }
+
+
+
+
+        setOptionStyle()
+        when(opt){
+            1-> {
+                view.setBackgroundResource(R.drawable.selectedfirst)
+                binding.txtPlayScore2.text = sortedlist2[0].firstButton.toString()
+            }
+            2->{
+                view.setBackgroundResource(R.drawable.selectedmiddle)
+                binding.txtPlayScore2.text = sortedlist2[0].secondButton.toString()
+            }
+            3->{
+                view.setBackgroundResource(R.drawable.selectredlast)
+                binding.txtPlayScore2.text = sortedlist2[0].thirdButton.toString()
+            }
+        }
+
+    }
+
+    private fun setOptionStyle() {
+        binding.backgrounddd.setBackgroundResource(R.drawable.turkum1)
+        binding.backgrounddd2.setBackgroundResource(R.drawable.turkum2)
+        binding.backgrounddd3.setBackgroundResource(R.drawable.turkum3)
+    }
+
 
     private fun showNextQuestion() {
 
@@ -405,18 +387,13 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
             } else {
                 score = correct
 
-                var kategoriya = requireArguments().get("katposition")
                 var result = txtPlayScore.text.toString().toDouble()
-                val varyant = requireArguments().get("varyant")
+
 
 
                 var bundle = Bundle()
                 bundle.putString("sarlavha",sarlavha)
-                bundle.putInt("options",3)
-                bundle.putInt("varyant",varyant.toString().toInt())
                 bundle.putDouble("result",result)
-                bundle.putInt("savollarSoni",savollar.size)
-                bundle.putInt("katposition",kategoriya.toString().toInt())
 
 
                 val resultFragment = ResultFragment()
@@ -460,6 +437,17 @@ class QuestionsFragment : Fragment(),View.OnClickListener {
         binding.start.visibility = View.GONE
         binding.savolBg.visibility = View.GONE
         binding.txtPlayScore.text = "Hali test qo'shilmagan iltimos orqaga qayting"
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).hideBottomNavigation()
+    }
+
+    override fun onDetach() {
+        (activity as MainActivity).showBottomNavigation()
+        super.onDetach()
+
     }
 
 

@@ -12,12 +12,14 @@ interface ThemesDao {
     @Query("select * from themesentity")
     fun getAllThemes(): List<ThemesEntity>
 
+    @Query("select * from themesentity where id=:id")
+    fun getThemesById(id:Int): List<ThemesEntity>
 
     @Insert
     fun addThemes(themesEntity: ThemesEntity)
 
     @Update
-    fun updateTheme(themesEntity:ThemesEntity)
+    fun updateTheme(themesEntity: List<ThemesEntity>)
 
     @Delete
     fun deleteTheme(themesEntity:ThemesEntity)

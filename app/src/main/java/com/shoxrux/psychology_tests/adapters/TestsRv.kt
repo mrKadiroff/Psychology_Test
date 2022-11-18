@@ -19,7 +19,21 @@ class TestsRv(var list: ArrayList<Test_Values>, var onItemClickListener: OnItemC
 
         fun onBind(test: Test_Values) {
             itemUserBinding.heading.text = test.sarlavha
-            itemUserBinding.minutes.text = test.duration
+
+
+            if (test.quantityOptions<=10){
+                itemUserBinding.minutes.text = "1 daqiqa"
+            } else if (test.quantityOptions>10 && test.quantityOptions<=20){
+                itemUserBinding.minutes.text = "2 daqiqa"
+            }else if (test.quantityOptions >20 && test.quantityOptions<=30){
+                itemUserBinding.minutes.text = "3 daqiqa"
+            }else if (test.quantityOptions>30 && test.quantityOptions<=40){
+                itemUserBinding.minutes.text = "4 daqiqa"
+            }
+
+
+
+
 
             if (adapterPosition == 0){
                 itemUserBinding.karta.setBackgroundResource(R.drawable.test1)

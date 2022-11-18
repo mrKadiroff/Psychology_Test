@@ -11,7 +11,7 @@ data class ThemesEntity (
 
 
     @ColumnInfo(name = "theme")
-    var switched: Boolean? = null,
+    var random: Int? = null,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

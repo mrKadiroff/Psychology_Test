@@ -1,5 +1,6 @@
 package com.shoxrux.psychology_tests.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,10 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.databinding.FragmentDoubleOptionsBinding
 import com.shoxrux.psychology_tests.databinding.FragmentQuestionsBinding
+import com.shoxrux.psychology_tests.models.Scores
 import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.ombor.setData
+import com.shoxrux.psychology_tests.ombor.setScores
+import com.shoxrux.psychology_tests.room.AppDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +43,7 @@ class DoubleOptionsFragment : Fragment() {
     }
 
     lateinit var binding: FragmentDoubleOptionsBinding
+    lateinit var appDatabase: AppDatabase
     lateinit var savollar:Array<String>
     lateinit var variantlar:Array<String>
     private var score = 0
@@ -45,43 +53,7 @@ class DoubleOptionsFragment : Fragment() {
     private var qIndex = 0
     private var updateQueNo = 1
     private var sarlavha = ""
-    // create string for question, answer and options
-    private var questions0 = arrayOf(
-        "Q.1. Eringizni hattoki qarindoshlaridan ham rash qilasizmi?",
-        "Q.2. Bir kun yoringizni ko'rmasangiz sog'inib qolasizmi?",
-        "Q.3. Vafodor erkak siz uchun qanday",
-        "Q.2. Sobiq jazmanigizni uchratsangiz nima qilasiz?")
-    private var options0 = arrayOf(
-        "Uniprocess",
-        "Multiprocessor",
-        "Multithreaded",
-        "Multiprogramming",
-        "Uniform Resource Locator",
-        "Uniform Resource Linkwrong",
-        "Uniform Registered Link",
-        "Unified Resource Link")
-
-
-    private var questions1 = arrayOf(
-        "Q.1. Kosemtikasiz yurolasizmi?",
-        "Q.2. Pamadangiz qanday rang?",
-        "Q.3. Jinsiy olatingizga kosmetika ishlatasizmi?",
-        "Q.4. Seks nima?",
-        "Q.4. prezervativ nima?",
-        "Q.4. Jalabmisan nima?")
-    private var options1 = arrayOf(
-        "albatta",
-        "Yo'q",
-        "O'ylab ko'raman",
-        "Bilmadim",
-        "Ha, Chunki uzaytirmoqchiman",
-        "Yo'q uzunligi yaxshi",
-        "Bilmadim",
-        "Sikaman",
-        "Jalab bo'lma",
-        "Seksning siri",
-        "Om yalsh",
-        "Gandon kalla")
+    lateinit var sortedlist2:ArrayList<Scores>
     private val TAG = "DoubleOptionsFragment"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,118 +61,162 @@ class DoubleOptionsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentDoubleOptionsBinding.inflate(layoutInflater,container,false)
+        appDatabase = AppDatabase.getInstance(binding.root.context)
+        sortedlist2 = ArrayList()
+
+
 
         sarlavha = requireArguments().get("sarlavha").toString()
 
 
 
 
+        Log.d(TAG, "onCreateView: ${sarlavha}")
 
         initView()
+
 
 
         return binding.root
     }
 
-    private fun setProgressBar() {
-        binding.progressBar.progress = 1
-        binding.progressBar.max = savollar.size
-    }
-
-
     private fun initView() {
+
+
         binding.apply {
 
 
+
+
             when(sarlavha){
-                "Rashkchimisiz" ->{
-                    savollar = questions0
-                    variantlar = options0
+                "Qaynonangizni yashi koring?" ->{
+                    savollar = setData.TestiIkki()
+                    variantlar = setData.JavobIkki()
                 }
-                "Kosmetikasiz hayot nima?" ->{
-                    savollar = questions1
-                    variantlar = options1
-                }
-                "Jinsiy hayotga tayyormisiz?" ->{
-                    savollar = questions0
-                    variantlar = options0
-                }
+
             }
 
 
 
+            binding.apply {
 
-            radioButton1.setOnClickListener {
-                txtPlayScore2.text = "1"
-            }
-            radioButton2.setOnClickListener {
-                txtPlayScore2.text = "2"
-            }
+                backgrounddd.setOnClickListener {
+                    selectedOptionStyle(backgrounddd,1)
 
-
-            tvQuestion.text = savollar[qIndex]
-            radioButton1.text = variantlar[0]
-            radioButton2.text = variantlar[1]
-            // check options selected or not
-            // if selected then selected option correct or wrong
-            nextQuestionBtn.setOnClickListener {
-                if (radiogrp.checkedRadioButtonId == -1) {
-                    Toast.makeText(binding.root.context,
-                        "Please select an options",
-                        Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    val increment = txtPlayScore2.text.toString().toInt()
-                    var text = txtPlayScore.text.toString().toInt()
-                    val first = text + increment
-                    txtPlayScore.text = first.toString()
-                    showNextQuestion()
-                    radiogrp.clearCheck()
                 }
+                backgrounddd2.setOnClickListener {
+
+
+                    selectedOptionStyle(backgrounddd2,2)
+
+                }
+
+
+                tvQuestion.text = savollar[qIndex]
+                titlee.text = variantlar[0]
+                titlee2.text = variantlar[1]
+
+                // check options selected or not
+                // if selected then selected option correct or wrong
+                start.setOnClickListener {
+
+                    if (txtPlayScore2.text == "0"){
+                        Toast.makeText(binding.root.context, "Iltimos tanlang", Toast.LENGTH_SHORT).show()
+                    }else{
+
+                        backgrounddd.setBackgroundResource(R.drawable.turkum1)
+                        backgrounddd2.setBackgroundResource(R.drawable.turkum3)
+
+                        val increment = txtPlayScore2.text.toString().toDouble()
+                        var text = txtPlayScore.text.toString().toDouble()
+                        val first = text + increment
+                        txtPlayScore.text = first.toString()
+                        showNextQuestion()
+                        txtPlayScore2.text = "0"
+                    }
+
+
+
+
+                }
+                tvQuestion.text = savollar[qIndex]
+
             }
-
-
-
-
-
-
-
-
-            tvNoOfQues.text = "$updateQueNo/${savollar.size}"
-            tvQuestion.text = savollar[qIndex]
 
 
         }
     }
 
+
+
+
+
+    private fun selectedOptionStyle(view: ConstraintLayout, opt:Int) {
+        val customObjects2 = setScores.getScores()
+        customObjects2.forEach {
+            if (it.category_name == sarlavha){
+                sortedlist2.add(it)
+
+            }
+        }
+
+        setOptionStyle()
+        when(opt){
+            1-> {
+                view.setBackgroundResource(R.drawable.selectedfirst)
+                binding.txtPlayScore2.text = sortedlist2[0].firstButton.toString()
+            }
+            2->{
+                view.setBackgroundResource(R.drawable.selectedmiddle)
+                binding.txtPlayScore2.text = sortedlist2[0].secondButton.toString()
+            }
+            3->{
+                view.setBackgroundResource(R.drawable.selectredlast)
+                binding.txtPlayScore2.text = sortedlist2[0].thirdButton.toString()
+            }
+        }
+
+    }
+
+    private fun setOptionStyle() {
+        binding.backgrounddd.setBackgroundResource(R.drawable.turkum1)
+        binding.backgrounddd2.setBackgroundResource(R.drawable.turkum3)
+
+    }
+
+
     private fun showNextQuestion() {
+
+
+
+
+
         qIndex++
+
         binding.progressBar.progress = qIndex
         binding.progressBar.max = savollar.size
+
         binding.apply {
             if (updateQueNo < savollar.size) {
-                tvNoOfQues.text = "${updateQueNo + 1}/${savollar.size}"
                 updateQueNo++
             }
             if (qIndex <= savollar.size - 1) {
                 tvQuestion.text = savollar[qIndex]
-                radioButton1.text = variantlar[qIndex * 2] // 2*4=8
-                radioButton2.text = variantlar[qIndex * 2 + 1] //  2*4+1=9
-
-
+                titlee.text = variantlar[qIndex * 2] // 2*4=8
+                titlee2.text = variantlar[qIndex * 2 + 1] //  2*4+1=9
 
             } else {
                 score = correct
 
                 var kategoriya = requireArguments().get("katposition")
-                var result = txtPlayScore.text.toString().toInt()
+                var result = txtPlayScore.text.toString().toDouble()
+                val varyant = requireArguments().get("varyant")
+
 
                 var bundle = Bundle()
                 bundle.putString("sarlavha",sarlavha)
-                bundle.putInt("options",2)
-                bundle.putInt("result",result)
-                bundle.putInt("savollarSoni",savollar.size)
-                bundle.putInt("katposition",kategoriya.toString().toInt())
+                bundle.putDouble("result",result)
+
 
 
                 val resultFragment = ResultFragment()
@@ -211,7 +227,47 @@ class DoubleOptionsFragment : Fragment() {
             }
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).hideBottomNavigation()
+    }
+
+    override fun onDetach() {
+        (activity as MainActivity).showBottomNavigation()
+        super.onDetach()
+
+    }
+
+
+
+
+
+
 
     companion object {
         /**

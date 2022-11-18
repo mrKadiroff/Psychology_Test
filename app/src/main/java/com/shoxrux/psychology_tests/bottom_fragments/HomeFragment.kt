@@ -1,21 +1,31 @@
 package com.shoxrux.psychology_tests.bottom_fragments
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.shoxrux.psychology_tests.MainActivity
 import com.shoxrux.psychology_tests.R
 import com.shoxrux.psychology_tests.adapters.CategoryRv
 import com.shoxrux.psychology_tests.databinding.FragmentHomeBinding
+import com.shoxrux.psychology_tests.fragments.DoubleOptionsFragment
+import com.shoxrux.psychology_tests.fragments.FourOptionsFragment
+import com.shoxrux.psychology_tests.fragments.QuestionsFragment
 import com.shoxrux.psychology_tests.fragments.TestFragment
 import com.shoxrux.psychology_tests.models.Category_Names
+import com.shoxrux.psychology_tests.models.Scores
+import com.shoxrux.psychology_tests.models.Test_Values
+import com.shoxrux.psychology_tests.ombor.setTestNames
 import com.shoxrux.psychology_tests.room.AppDatabase
 import com.shoxrux.psychology_tests.room.CategoryEntity
-import com.shoxrux.psychology_tests.room.scrores.ScoresEntity
+import com.shoxrux.psychology_tests.room.themes.ThemesEntity
+import com.shoxrux.psychology_tests.workmanager.UploadWork
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +53,7 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var categoryRv: CategoryRv
     lateinit var appDatabase: AppDatabase
+    lateinit var sortedlist:ArrayList<Test_Values>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,9 +61,23 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
         appDatabase = AppDatabase.getInstance(binding.root.context)
+        sortedlist = ArrayList()
+
+//        val rndInt = rnd_int(2, 35)
+//        binding.nomi.text = rndInt.toString()
+
+
+
+
+
+
+
+
+
 
         insertToRoom()
         setView()
+        setWork()
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -67,13 +92,108 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun setWork() {
+
+
+        val allThemes = appDatabase.themesDao().getAllThemes()
+
+        if (allThemes.isNullOrEmpty()){
+            val size = setTestNames.getTestsValues().size
+            val rndInt = rnd_int(1, size)
+             appDatabase.themesDao().addThemes(themesEntity = ThemesEntity(rndInt))
+
+            val workRequest = PeriodicWorkRequestBuilder<UploadWork>(
+                2, TimeUnit.MINUTES)
+                .build()
+
+            WorkManager.getInstance(binding.root.context).enqueue(workRequest)
+            Toast.makeText(binding.root.context, "Free trial faollashtirildi!!!", Toast.LENGTH_LONG).show()
+        }
+
+
+
+
+
+    }
+
     private fun setView() {
         binding.progressBar.progress = 4
         binding.progressBar.max = 9
+
+        val allThemes = appDatabase.themesDao().getAllThemes()
+
+        if (!allThemes.isNullOrEmpty()){
+            val random = allThemes[allThemes.lastIndex].random
+
+            setTestNames.getTestsValues().forEach {
+                if (it.id == random) {
+                    sortedlist.add(it)
+
+                }
+
+        }
+
+        binding.nomi.text = sortedlist[0].sarlavha
+            binding.descrtopyion.text = sortedlist[0].introduction
+
+            val qauntityOptions = sortedlist[0].quantityOptions
+
+            if (qauntityOptions<=10){
+                binding.minutes.text = "1 daqiqa"
+            } else if (qauntityOptions>10 && qauntityOptions<=20){
+                binding.minutes.text = "2 daqiqa"
+            }else if (qauntityOptions>20 && qauntityOptions<=30){
+                binding.minutes.text = "3 daqiqa"
+            }else if (qauntityOptions>30 && qauntityOptions<=40){
+                binding.minutes.text = "4 daqiqa"
+            }
+
+            binding.savollar.text = sortedlist[0].quantityOptions.toString()
+
+            val options = sortedlist[0].options
+
+            binding.cardView.setOnClickListener {
+                var bundle =Bundle()
+                bundle.putString("sarlavha",sortedlist[0].sarlavha)
+
+
+                when(options){
+                    2->{
+                        val doubleOptionsFragment = DoubleOptionsFragment()
+                        doubleOptionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,doubleOptionsFragment).commit()
+                    }
+                    3->{
+                        val questionsFragment = QuestionsFragment()
+                        questionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,questionsFragment).commit()
+                    }
+
+                    4->{
+                        val fourOptionsFragment = FourOptionsFragment()
+                        fourOptionsFragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.frameLayout,fourOptionsFragment).commit()
+                    }
+                }
+            }
+
+
+
+        }
     }
 
     private fun insertToRoom() {
         val customObjects = getCustomObjects()
+
+
+
+
 
         val allCategory = appDatabase.categoryDao().getAllCategory()
 
@@ -81,15 +201,6 @@ class HomeFragment : Fragment() {
             appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Erkaklar uchun",R.drawable.mujik,0))
             appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Ayollar uchun",R.drawable.women,1))
             appDatabase.categoryDao().addCategory(categoryEntity = CategoryEntity("Munosabatlar",R.drawable.munosabatlar,2))
-        }
-
-        val allScores = appDatabase.scoresDao().getAllScores()
-
-        if (allScores.isNullOrEmpty()){
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Odamlar bilan chiqishib keta olasizmi?",10,11,18,2.1,1.0,1.11))
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Qanday ayollar sizni o'ziga maftun qiladi?",7,8,21,1.0,2.0,3.0))
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Haqiqiy erkakmisiz yoki yosh bola?",5,9,15,1.0,2.0,3.0))
-            appDatabase.scoresDao().addScores(scoresEntity = ScoresEntity("Sizga qanaqa erkak to'g'ri keladi?",7,14,15,1.0,2.0,3.0))
         }
 
 
@@ -184,20 +295,14 @@ class HomeFragment : Fragment() {
         super.onResume()
         setRv()
         (activity as MainActivity).showBottomNavigation()
+
     }
 
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (activity as MainActivity).hideBottomNavigation()
-//    }
-//
-//    override fun onDetach() {
-//        (activity as MainActivity).showBottomNavigation()
-//        super.onDetach()
-//
-//    }
-
+    fun rnd_int(min: Int, max: Int): Int {
+        var max = max
+        max -= min
+        return (Math.random() * ++max).toInt() + min
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
